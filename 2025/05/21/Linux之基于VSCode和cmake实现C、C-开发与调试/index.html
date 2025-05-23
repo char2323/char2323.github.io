@@ -1,26 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/my_blog_show/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/my_blog_show/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/my_blog_show/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/my_blog_show/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/my_blog_show/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"char2323.github.io","root":"/my_blog_show/","images":"/my_blog_show/images","scheme":"Mist","darkmode":true,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/my_blog_show/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/my_blog_show/js/config.js" defer></script>
-
-    <meta name="description" content="Linux Vim GCC GDB CMake">
+  <meta charset="utf-8">
+  
+  
+  <title>Linux之基于VSCode和cmake实现C、C++开发与调试 | 自由飞翔的猪仔</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Linux Vim GCC GDB CMake">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux之基于VSCode和cmake实现C、C++开发与调试">
 <meta property="og:url" content="https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/index.html">
@@ -33,235 +19,89 @@
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-
-
-<link rel="canonical" href="https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/">
-
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/","path":"2025/05/21/Linux之基于VSCode和cmake实现C、C-开发与调试/","title":"Linux之基于VSCode和cmake实现C、C++开发与调试"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Linux之基于VSCode和cmake实现C、C++开发与调试 | 自由飞翔的猪仔</title>
   
-
-
-
-
-
-
-
+    <link rel="alternate" href="/my_blog_show/atom.xml" title="自由飞翔的猪仔" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/my_blog_show/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/my_blog_show/css/style.css">
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
-<script src="/my_blog_show/js/utils.js" defer></script><script src="/my_blog_show/js/motion.js" defer></script><script src="/my_blog_show/js/sidebar.js" defer></script><script src="/my_blog_show/js/next-boot.js" defer></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous" defer></script>
-<script src="/my_blog_show/js/third-party/search/local-search.js" defer></script>
-
-
-
-
-
-
+    
+<link rel="stylesheet" href="/my_blog_show/fancybox/jquery.fancybox.min.css">
 
   
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 
+<meta name="generator" content="Hexo 7.3.0"></head>
 
-
-
-
-  <noscript>
-    <link rel="stylesheet" href="/my_blog_show/css/noscript.css">
-  </noscript>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/my_blog_show/" id="logo">自由飞翔的猪仔</a>
+      </h1>
+      
     </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/my_blog_show/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">自由飞翔的猪仔</p>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-        <i class="fa fa-search fa-fw fa-lg"></i>
-    </div>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/my_blog_show/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/my_blog_show/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/my_blog_show/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/my_blog_show/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
-  </ul>
-</nav>
-
-
-
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-      <div class="search-header">
-        <span class="search-icon">
-          <i class="fa fa-search"></i>
-        </span>
-        <div class="search-input-container">
-          <input autocomplete="off" autocapitalize="off" maxlength="80"
-                placeholder="Searching..." spellcheck="false"
-                type="search" class="search-input">
-        </div>
-        <span class="popup-btn-close" role="button">
-          <i class="fa fa-times-circle"></i>
-        </span>
-      </div>
-      <div class="search-result-container">
-        <div class="search-result-icon">
-          <i class="fa fa-spinner fa-pulse fa-5x"></i>
-        </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/my_blog_show/">Home</a>
+        
+          <a class="main-nav-link" href="/my_blog_show/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/my_blog_show/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://char2323.github.io/my_blog_show"></form>
       </div>
     </div>
   </div>
-
 </header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Linux之基于VSCode和cmake实现C、C-开发与调试" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/" class="article-date">
+  <time class="dt-published" datetime="2025-05-21T12:18:51.000Z" itemprop="datePublished">2025-05-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/my_blog_show/categories/CS-Study/">CS-Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
   
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E9%87%8D%E8%A6%81%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">Linux重要指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91"><span class="nav-number">2.</span> <span class="nav-text">Vim文件编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vim%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">Vim模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nomal%E6%A8%A1%E5%BC%8F%E5%9F%BA%E6%9C%AC%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">Nomal模式：基本移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#insert%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.2.</span> <span class="nav-text">Insert模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.3.</span> <span class="nav-text">Command模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visual%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.4.</span> <span class="nav-text">VIsual模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E4%B8%8E%E7%BC%96%E8%BE%91"><span class="nav-number">2.2.</span> <span class="nav-text">移动与编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%8D%95%E8%AF%8D%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.2.1.</span> <span class="nav-text">基于单词的移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%90%9C%E7%B4%A2%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.2.2.</span> <span class="nav-text">基于搜索的移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A0%87%E8%AE%B0%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.2.3.</span> <span class="nav-text">基于标记的移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#operatormotionaction"><span class="nav-number">2.2.4.</span> <span class="nav-text">Operator+Motion&#x3D;Action</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">GCC编译器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">编译过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#g%E9%87%8D%E8%A6%81%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">g++重要编译参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">GDB调试器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E8%B0%83%E8%AF%95%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">常用调试命令参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">5.</span> <span class="nav-text">VSCode常用快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake"><span class="nav-number">6.</span> <span class="nav-text">CMake</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7%E4%BB%8B%E7%BB%8D"><span class="nav-number">6.1.</span> <span class="nav-text">语法特性介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%8C%87%E4%BB%A4"><span class="nav-number">6.2.</span> <span class="nav-text">重要指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake%E5%B8%B8%E7%94%A8%E5%8F%98%E9%87%8F"><span class="nav-number">6.3.</span> <span class="nav-text">CMake常用变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake%E7%BC%96%E8%AF%91%E5%B7%A5%E7%A8%8B"><span class="nav-number">6.4.</span> <span class="nav-text">CMake编译工程</span></a></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Charmmy</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/my_blog_show/archives/">
-          <span class="site-state-item-count">6</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/my_blog_show/categories/">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/my_blog_show/tags/">
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-
-        </div>
-      </div>
-    </div>
-
-    
-  </aside>
-
-
-    </div>
-
-    <div class="main-inner post posts-expand">
-
-
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux之基于VSCode和cmake实现C、C++开发与调试
+    </h1>
   
 
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/my_blog_show/images/avatar.gif">
-      <meta itemprop="name" content="Charmmy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="自由飞翔的猪仔">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Linux之基于VSCode和cmake实现C、C++开发与调试 | 自由飞翔的猪仔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Linux之基于VSCode和cmake实现C、C++开发与调试
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-05-21 20:18:51 / Modified: 23:57:55" itemprop="dateCreated datePublished" datetime="2025-05-21T20:18:51+08:00">2025-05-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/my_blog_show/categories/CS-Study/" itemprop="url" rel="index"><span itemprop="name">CS-Study</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
       </header>
-
     
-    
-    
-    <div class="post-body" itemprop="articleBody"><h2 id="linux重要指令">Linux重要指令</h2>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="linux重要指令">Linux重要指令</h2>
 <ul>
 <li><strong>pwd-Print current working directory</strong>
 <ul>
@@ -620,71 +460,152 @@ Visual模式：可视模式，对文本进行选择</p>
 <p>推荐使用<strong>外部构建(out-of-cource
 build)</strong>，将编译输出文件与源文件放到不同目录中 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 外部构建</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.在当前目录下，创建build文件夹</span></span><br><span class="line">mkdir build</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.进入到build文件夹</span></span><br><span class="line">cd build</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.编译上级目录的CMakeLists.txt，生成Makefile和其他文件</span></span><br><span class="line">cmake ..</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.执行make命令，生成target</span></span><br><span class="line">make</span><br></pre></td></tr></table></figure></p>
 
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/" data-id="cmb0ysdly00034n5a4zadhmjb" data-title="Linux之基于VSCode和cmake实现C、C++开发与调试" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/my_blog_show/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/my_blog_show/tags/Linux/" rel="tag">Linux</a></li></ul>
 
-    
-    
-    
-
-    <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/my_blog_show/tags/Linux/" rel="tag"># Linux</a>
-              <a href="/my_blog_show/tags/C/" rel="tag"># C++</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-            </div>
-            <div class="post-nav-item">
-                <a href="/my_blog_show/2025/05/21/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%BD%9C%E4%B8%9A%EF%BC%9A%E6%8F%92%E5%80%BC%E4%B8%8E%E6%8B%9F%E5%90%88/" rel="next" title="数值分析作业：插值与拟合">
-                  数值分析作业：插值与拟合 <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-          </div>
     </footer>
-  </article>
-</div>
-
-
-
-
-
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-  <div class="copyright">
-    &copy; 
-    <span itemprop="copyrightYear">2025</span>
-    <span class="with-love">
-      <i class="fa fa-heart"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">Charmmy</span>
   </div>
-
-    </div>
-  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/my_blog_show/2025/05/21/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%BD%9C%E4%B8%9A%EF%BC%9A%E6%8F%92%E5%80%BC%E4%B8%8E%E6%8B%9F%E5%90%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          数值分析作业：插值与拟合
+        
+      </div>
+    </a>
+  
+  
+</nav>
 
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-  <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/my_blog_show/categories/CS-Study/">CS-Study</a></li><li class="category-list-item"><a class="category-list-link" href="/my_blog_show/categories/Math-Study/">Math-Study</a></li></ul>
+    </div>
   </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/my_blog_show/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/my_blog_show/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/my_blog_show/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/my_blog_show/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/my_blog_show/tags/math/" rel="tag">math</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/my_blog_show/tags/C/" style="font-size: 20px;">C++</a> <a href="/my_blog_show/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/my_blog_show/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/my_blog_show/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/my_blog_show/tags/math/" style="font-size: 10px;">math</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/my_blog_show/archives/2025/05/">May 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/my_blog_show/2025/05/22/%E4%B8%BB%E9%A2%98/">主题</a>
+          </li>
+        
+          <li>
+            <a href="/my_blog_show/2025/05/21/%E5%B7%A6%E5%80%BC-%E5%8F%B3%E5%80%BC/">左值&amp;右值</a>
+          </li>
+        
+          <li>
+            <a href="/my_blog_show/2025/05/21/%E5%88%A0%E9%99%A4%E6%88%96%E4%BF%AE%E6%94%B9-Hexo-%E5%8D%9A%E5%AE%A2%E9%A1%B5%E8%84%9A%EF%BC%88footer%EF%BC%89/">删除或修改 Hexo 博客页脚（footer）</a>
+          </li>
+        
+          <li>
+            <a href="/my_blog_show/2025/05/21/Docker%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/">Docker常用指令</a>
+          </li>
+        
+          <li>
+            <a href="/my_blog_show/2025/05/21/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%BD%9C%E4%B8%9A%EF%BC%9A%E6%8F%92%E5%80%BC%E4%B8%8E%E6%8B%9F%E5%90%88/">数值分析作业：插值与拟合</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 Charmmy<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/my_blog_show/" class="mobile-nav-link">Home</a>
+  
+    <a href="/my_blog_show/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/my_blog_show/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/my_blog_show/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/my_blog_show/js/script.js"></script>
+
+
+
+
+
+  </div>
 </body>
 </html>

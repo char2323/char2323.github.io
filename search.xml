@@ -399,74 +399,6 @@ build)</strong>，将编译输出文件与源文件放到不同目录中 <figure
       </tags>
   </entry>
   <entry>
-    <title>删除或修改 Hexo 博客页脚（footer）</title>
-    <url>/my_blog_show/2025/05/21/%E5%88%A0%E9%99%A4%E6%88%96%E4%BF%AE%E6%94%B9-Hexo-%E5%8D%9A%E5%AE%A2%E9%A1%B5%E8%84%9A%EF%BC%88footer%EF%BC%89/</url>
-    <content><![CDATA[<p>要删除或修改 Hexo 博客页脚（footer）中“Theme By Levblanc. Inspired By
-Clean Blog. Powered By
-Hexo.”这样的信息，你需要编辑你当前使用主题的模板文件。</p>
-<p>这些信息通常被称为<strong>主题版权信息</strong>或<strong>Powered By
-信息</strong>。</p>
-<p>以下是操作步骤：</p>
-<ol type="1">
-<li><p><strong>确定你当前使用的主题：</strong> 打开你的 Hexo 根目录下的
-<code>_config.yml</code> 文件。找到 <code>theme</code>
-字段，它会告诉你当前正在使用哪个主题。例如：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">levblanc</span> <span class="comment"># 假设你的主题名是 levblanc</span></span><br></pre></td></tr></table></figure></li>
-<li><p><strong>找到主题的布局文件：</strong> 进入
-<code>themes/你的主题名/</code> 目录。
-页脚信息通常位于主题的布局文件（<code>layout</code>
-文件夹）中。你需要寻找的文件可能是：</p>
-<ul>
-<li><code>themes/你的主题名/layout/_partial/footer.ejs</code> (或
-<code>.pug</code>, <code>.swig</code>，取决于主题使用的模板引擎)</li>
-<li><code>themes/你的主题名/layout/footer.ejs</code></li>
-<li><code>themes/你的主题名/layout/layout.ejs</code>
-(如果页脚直接集成在主布局文件中)</li>
-</ul>
-<p>根据你提供的图片，主题名称可能是
-<code>Levblanc</code>。所以，你可能会在
-<code>themes/levblanc/layout/_partial/footer.ejs</code>
-或类似路径中找到相关代码。</p></li>
-<li><p><strong>编辑文件并删除/修改代码：</strong>
-打开找到的相应文件。使用文本编辑器搜索图片中显示的文字，例如 “Levblanc”,
-“Clean Blog”, “Hexo” 等关键词。</p>
-<p>你可能会看到类似以下的代码片段：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"copyright"</span>&gt;</span></span><br><span class="line">    <span class="symbol">&amp;copy;</span> &lt;%= date(new Date(), 'YYYY') %&gt; &lt;%= config.author || config.title %&gt;. All Rights Reserved.</span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    Theme By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/Levblanc"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Levblanc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>. Inspired By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/your-clean-blog-repo"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Clean Blog<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line">    Powered By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://hexo.io/"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>或者：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Theme By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0);"</span>&gt;</span>Levblanc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>. Inspired By Clean Blog. Powered By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://hexo.io/"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>你可以选择：</strong></p>
-<ul>
-<li><strong>直接删除：</strong> 将包含这些文字的整个 HTML 标签（通常是
-<code>&lt;p&gt;</code> 或 <code>&lt;div&gt;</code>）删除。</li>
-<li><strong>修改：</strong> 将文本改为你自己的信息，例如 “由
-[你的名字/博客名] 提供”。</li>
-<li><strong>注释掉：</strong> 如果你不确定，可以先用 HTML 注释 ``
-将其注释掉，以便将来恢复。</li>
-</ul>
-<p><strong>请注意：</strong></p>
-<ul>
-<li>修改主题文件时，最好先<strong>备份</strong>一下。</li>
-<li>某些主题可能在<strong>主题的 <code>_config.yml</code>
-文件</strong>中提供了修改这些信息的选项。优先检查主题自身的配置文件，因为那样更新主题时你的修改不会被覆盖。在
-<code>themes/你的主题名/_config.yml</code> 中搜索
-<code>footer</code>、<code>copyright</code>、<code>powered_by</code>
-等关键词。如果有提供选项，直接在 <code>_config.yml</code>
-修改即可。</li>
-</ul></li>
-<li><p><strong>保存并重新生成：</strong> 保存你修改的文件后，回到 Hexo
-根目录，运行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean    <span class="comment"># 清除缓存</span></span><br><span class="line">hexo generate <span class="comment"># 重新生成静态文件</span></span><br><span class="line">hexo server   <span class="comment"># 在本地预览</span></span><br></pre></td></tr></table></figure>
-<p>然后刷新你的博客页面，页脚信息应该已经发生改变或消失了。</p></li>
-</ol>
-]]></content>
-      <categories>
-        <category>CS-Study</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>主题</title>
     <url>/my_blog_show/2025/05/22/%E4%B8%BB%E9%A2%98/</url>
     <content><![CDATA[<ol type="1">
@@ -555,6 +487,74 @@ Volantis 或 Butterfly。</strong></li>
 <li><strong>清除和生成：</strong> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>访问你的博客，并打开一篇带有标题结构的文章，就应该能看到目录了。希望这能帮到你！</p>
+]]></content>
+      <categories>
+        <category>CS-Study</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>删除或修改 Hexo 博客页脚（footer）</title>
+    <url>/my_blog_show/2025/05/21/%E5%88%A0%E9%99%A4%E6%88%96%E4%BF%AE%E6%94%B9-Hexo-%E5%8D%9A%E5%AE%A2%E9%A1%B5%E8%84%9A%EF%BC%88footer%EF%BC%89/</url>
+    <content><![CDATA[<p>要删除或修改 Hexo 博客页脚（footer）中“Theme By Levblanc. Inspired By
+Clean Blog. Powered By
+Hexo.”这样的信息，你需要编辑你当前使用主题的模板文件。</p>
+<p>这些信息通常被称为<strong>主题版权信息</strong>或<strong>Powered By
+信息</strong>。</p>
+<p>以下是操作步骤：</p>
+<ol type="1">
+<li><p><strong>确定你当前使用的主题：</strong> 打开你的 Hexo 根目录下的
+<code>_config.yml</code> 文件。找到 <code>theme</code>
+字段，它会告诉你当前正在使用哪个主题。例如：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">levblanc</span> <span class="comment"># 假设你的主题名是 levblanc</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>找到主题的布局文件：</strong> 进入
+<code>themes/你的主题名/</code> 目录。
+页脚信息通常位于主题的布局文件（<code>layout</code>
+文件夹）中。你需要寻找的文件可能是：</p>
+<ul>
+<li><code>themes/你的主题名/layout/_partial/footer.ejs</code> (或
+<code>.pug</code>, <code>.swig</code>，取决于主题使用的模板引擎)</li>
+<li><code>themes/你的主题名/layout/footer.ejs</code></li>
+<li><code>themes/你的主题名/layout/layout.ejs</code>
+(如果页脚直接集成在主布局文件中)</li>
+</ul>
+<p>根据你提供的图片，主题名称可能是
+<code>Levblanc</code>。所以，你可能会在
+<code>themes/levblanc/layout/_partial/footer.ejs</code>
+或类似路径中找到相关代码。</p></li>
+<li><p><strong>编辑文件并删除/修改代码：</strong>
+打开找到的相应文件。使用文本编辑器搜索图片中显示的文字，例如 “Levblanc”,
+“Clean Blog”, “Hexo” 等关键词。</p>
+<p>你可能会看到类似以下的代码片段：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"copyright"</span>&gt;</span></span><br><span class="line">    <span class="symbol">&amp;copy;</span> &lt;%= date(new Date(), 'YYYY') %&gt; &lt;%= config.author || config.title %&gt;. All Rights Reserved.</span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    Theme By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/Levblanc"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Levblanc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>. Inspired By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/your-clean-blog-repo"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Clean Blog<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line">    Powered By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://hexo.io/"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Theme By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0);"</span>&gt;</span>Levblanc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>. Inspired By Clean Blog. Powered By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://hexo.io/"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>你可以选择：</strong></p>
+<ul>
+<li><strong>直接删除：</strong> 将包含这些文字的整个 HTML 标签（通常是
+<code>&lt;p&gt;</code> 或 <code>&lt;div&gt;</code>）删除。</li>
+<li><strong>修改：</strong> 将文本改为你自己的信息，例如 “由
+[你的名字/博客名] 提供”。</li>
+<li><strong>注释掉：</strong> 如果你不确定，可以先用 HTML 注释 ``
+将其注释掉，以便将来恢复。</li>
+</ul>
+<p><strong>请注意：</strong></p>
+<ul>
+<li>修改主题文件时，最好先<strong>备份</strong>一下。</li>
+<li>某些主题可能在<strong>主题的 <code>_config.yml</code>
+文件</strong>中提供了修改这些信息的选项。优先检查主题自身的配置文件，因为那样更新主题时你的修改不会被覆盖。在
+<code>themes/你的主题名/_config.yml</code> 中搜索
+<code>footer</code>、<code>copyright</code>、<code>powered_by</code>
+等关键词。如果有提供选项，直接在 <code>_config.yml</code>
+修改即可。</li>
+</ul></li>
+<li><p><strong>保存并重新生成：</strong> 保存你修改的文件后，回到 Hexo
+根目录，运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean    <span class="comment"># 清除缓存</span></span><br><span class="line">hexo generate <span class="comment"># 重新生成静态文件</span></span><br><span class="line">hexo server   <span class="comment"># 在本地预览</span></span><br></pre></td></tr></table></figure>
+<p>然后刷新你的博客页面，页脚信息应该已经发生改变或消失了。</p></li>
+</ol>
 ]]></content>
       <categories>
         <category>CS-Study</category>
