@@ -496,6 +496,189 @@ Volantis 或 Butterfly。</strong></li>
       </tags>
   </entry>
   <entry>
+    <title>左值&amp;右值</title>
+    <url>/2025/05/21/%E5%B7%A6%E5%80%BC-%E5%8F%B3%E5%80%BC/</url>
+    <content><![CDATA[<p>我们来详细解释一下 C++ 中的左值 (lvalue) 和右值 (rvalue)
+的概念，以及为什么在模板中使用 <code>T&amp;&amp;</code>
+会成为<strong>通用引用 (Universal Reference)</strong> 或
+<strong>转发引用 (Forwarding
+Reference)</strong>，从而能够绑定到左值和右值。</p>
+<p>理解左值和右值是理解 C++ 11
+引入的右值引用、移动语义和完美转发的关键。</p>
+<h3 id="左值-lvalue-和-右值-rvalue">左值 (lvalue) 和 右值 (rvalue)</h3>
+<p>最直观的理解：</p>
+<ul>
+<li><p><strong>左值 (lvalue)：</strong> 可以出现在赋值号 <code>=</code>
+的左边的表达式。它代表一个有<strong>内存地址</strong>、有<strong>持久身份</strong>的对象。你可以反复地使用这个对象，并观察它的状态变化。</p>
+<ul>
+<li><strong>例子：</strong></li>
+</ul></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">10</span>;     <span class="comment">// x 是一个左值</span></span><br><span class="line"><span class="type">int</span> arr[<span class="number">5</span>];</span><br><span class="line">arr[<span class="number">0</span>] = <span class="number">1</span>;     <span class="comment">// arr[0] 是一个左值</span></span><br><span class="line"><span class="type">int</span>* p = &amp;x;</span><br><span class="line">*p = <span class="number">20</span>;        <span class="comment">// *p 是一个左值</span></span><br><span class="line">std::string s = <span class="string">"hello"</span>; <span class="comment">// s 是一个左值</span></span><br></pre></td></tr></table></figure>
+<pre><code>- 你可以取左值的地址：`&amp;x`, `&amp;arr[0]`, `p`, `&amp;s` 都是合法的。</code></pre>
+<ul>
+<li><p><strong>右值 (rvalue)：</strong> 只能出现在赋值号 <code>=</code>
+的右边的表达式。它代表一个<strong>临时值</strong>，通常是没有固定内存地址、在表达式结束时就会被销毁的对象。它没有持久身份。</p>
+<ul>
+<li><strong>例子：</strong></li>
+</ul></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> y = x + <span class="number">5</span>;      <span class="comment">// x + 5 的结果是一个临时整数，是右值</span></span><br><span class="line"><span class="type">int</span> z = <span class="number">10</span>;         <span class="comment">// 10 是一个字面量，是右值</span></span><br><span class="line"><span class="function">std::string <span class="title">func</span><span class="params">()</span></span>; <span class="comment">// 假设 func 返回 std::string (按值返回)</span></span><br><span class="line">std::string s2 = <span class="built_in">func</span>(); <span class="comment">// func() 的返回值是一个临时 string，是右值</span></span><br><span class="line"><span class="type">int</span> abs_val = std::<span class="built_in">abs</span>(<span class="number">-5</span>); <span class="comment">// std::abs(-5) 的返回值是一个临时整数，是右值</span></span><br></pre></td></tr></table></figure>
+<pre><code>- 你通常不能直接取右值的地址（除了某些特殊情况，比如字符串字面量 `"hello"`）。</code></pre>
+<p><strong>更规范地说：</strong></p>
+<ul>
+<li><strong>左值 (lvalue)：</strong>
+指的是一个表达式，它的求值结果是一个对象的身份（可以理解为内存地址或名称）。</li>
+<li><strong>右值 (rvalue)：</strong>
+指的是一个表达式，它的求值结果是一个对象的值，但没有一个易于获取的身份（例如，一个临时对象或字面量）。</li>
+</ul>
+<h3 id="c-中的引用类型">C++ 中的引用类型</h3>
+<p>在 C++11 之前，我们主要使用<strong>左值引用
+(<code>&amp;</code>)</strong>：</p>
+<ul>
+<li><code>int&amp; ref = x;</code>：<code>ref</code> 是 <code>x</code>
+的一个左值引用，它必须绑定到一个<strong>左值</strong>。你不能将一个非
+<code>const</code>
+的左值引用绑定到一个右值：<code>int&amp; ref_err = 10;</code>
+(错误)。</li>
+<li><code>const int&amp; const_ref = x;</code>：<code>const_ref</code>
+是 <code>x</code> 的一个常量左值引用。</li>
+<li><code>const int&amp; const_ref2 = x + 5;</code>：<strong>一个常量左值引用
+(<code>const T&amp;</code>)
+可以绑定到右值</strong>。这是为了兼容旧代码，允许你将临时对象传递给接受
+<code>const T&amp;</code> 的函数，避免拷贝。</li>
+</ul>
+<p>C++11 引入了<strong>右值引用 (<code>&amp;&amp;</code>)</strong>：</p>
+<ul>
+<li><code>int&amp;&amp; rref = 10;</code>：<code>rref</code>
+是一个右值引用，它可以绑定到一个<strong>右值</strong>。</li>
+<li>右值引用主要用于<strong>移动语义 (Move
+Semantics)</strong>。它允许你高效地处理临时对象（右值），通过“移动”其资源（如动态分配的内存）而不是进行昂贵的深拷贝。</li>
+<li><strong>一个普通的右值引用 (<code>T&amp;&amp;</code>)
+不能绑定到左值</strong>：<code>int y; int&amp;&amp; rref_err = y;</code>
+(错误)。</li>
+</ul>
+<h3 id="通用引用-universal-reference-转发引用-forwarding-reference">通用引用
+(Universal Reference) / 转发引用 (Forwarding Reference)</h3>
+<p>现在到了你困惑的地方。在 C++
+的<strong>模板</strong>中，当一个函数参数被声明为
+<code>T&amp;&amp;</code>，并且 <code>T</code> 是一个<strong>被推导
+(deduced)</strong> 出来的模板类型参数时，这个 <code>T&amp;&amp;</code>
+就具有了特殊的性质，它不再仅仅是右值引用，而被称为<strong>通用引用
+(Universal Reference)</strong> 或 <strong>转发引用 (Forwarding
+Reference)</strong>。</p>
+<p>它的特殊之处在于：<strong>它能够绑定到左值或右值，具体绑定到哪种取决于传递给模板函数的实际参数的类型。</strong></p>
+<p>这是通过<strong>引用折叠 (Reference Collapsing)</strong>
+规则实现的：</p>
+<ol type="1">
+<li><p><strong>如果传递给模板函数的实参是一个左值
+<code>l</code>：</strong></p>
+<ul>
+<li>模板参数 <code>T</code> 会被推导为左值引用类型，比如
+<code>ActualType&amp;</code>。</li>
+<li>那么函数参数 <code>T&amp;&amp;</code> 就会变成
+<code>(ActualType&amp;)&amp;&amp;</code>。</li>
+<li>根据引用折叠规则 <code>&amp; &amp;&amp;</code> -&gt;
+<code>&amp;</code>，最终函数参数的类型是 <code>ActualType&amp;</code>
+(一个左值引用)。</li>
+<li>所以，当传入左值时，<code>T&amp;&amp;</code>
+参数会实例化为一个左值引用，成功绑定到该左值。</li>
+</ul></li>
+<li><p><strong>如果传递给模板函数的实参是一个右值
+<code>r</code>：</strong></p>
+<ul>
+<li>模板参数 <code>T</code> 会被推导为非引用类型，比如
+<code>ActualType</code>。</li>
+<li>那么函数参数 <code>T&amp;&amp;</code> 就会变成
+<code>(ActualType)&amp;&amp;</code>。</li>
+<li>根据引用折叠规则 非引用 <code>&amp;&amp;</code> -&gt;
+<code>&amp;&amp;</code>，最终函数参数的类型是
+<code>ActualType&amp;&amp;</code> (一个右值引用)。</li>
+<li>所以，当传入右值时，<code>T&amp;&amp;</code>
+参数会实例化为一个右值引用，成功绑定到该右值。</li>
+</ul></li>
+</ol>
+<p><strong>结论：</strong> 在模板中，参数类型为 <code>T&amp;&amp;</code>
+(其中 T 是推导的类型参数)
+的引用，可以根据传入的实参类型，“变形”为左值引用或右值引用。这就是它被称为“通用”或“转发”引用的原因。</p>
+<h3 id="为什么需要-stdforward完美转发">为什么需要
+<code>std::forward</code>？（完美转发）</h3>
+<p>既然通用引用已经可以绑定到左值和右值了，为什么在将参数传递给被测函数
+<code>f</code> 时还需要 <code>std::forward</code> 呢？</p>
+<p>问题在于，一旦参数 <code>args</code> 被绑定并进入
+<code>measureTime</code>
+函数内部，无论它最初是左值还是右值，<strong>它的变量名 <code>args</code>
+在 <code>measureTime</code>
+函数的内部作用域中，永远是一个左值</strong>。</p>
+<p>如果你直接写 <code>f(args...)</code>，<code>args</code>
+会被当作左值传递给 <code>f</code>。如果 <code>f</code>
+有重载版本，一个接受 <code>const T&amp;</code>，一个接受
+<code>T&amp;&amp;</code> (用于移动)，直接传 <code>args</code>
+会总是匹配到接受左值的版本（可能是拷贝构造而不是移动构造），即使原始参数是一个右值。</p>
+<p><code>std::forward</code> 的作用就是<strong>恢复参数的原始值类别
+(Value Category)</strong>。</p>
+<ul>
+<li><code>std::forward&lt;Args&gt;(args)</code>：
+<ul>
+<li>如果 <code>Args</code> 在模板推导时是 <code>ActualType&amp;</code>
+(表明原始参数是左值)，<code>std::forward</code> 会将 <code>args</code>
+强制转换为 <code>ActualType&amp;</code>。</li>
+<li>如果 <code>Args</code> 在模板推导时是 <code>ActualType</code>
+(表明原始参数是右值)，<code>std::forward</code> 会将 <code>args</code>
+强制转换为 <code>ActualType&amp;&amp;</code>。</li>
+</ul></li>
+</ul>
+<p>这样，<code>f(std::forward&lt;Args&gt;(args)...)</code>
+就实现了<strong>完美转发 (Perfect Forwarding)</strong>：如果调用
+<code>measureTime</code> 时传入的是左值，那么 <code>f</code>
+会收到左值；如果传入的是右值，那么 <code>f</code> 会收到右值。这确保了
+<code>f</code>
+内部的逻辑（比如是否触发移动语义）能够根据原始参数的类型正确执行。</p>
+<h3 id="回到-measuretime-函数模板">回到 <code>measureTime</code>
+函数模板</h3>
+<p>现在，我们再来看 <code>measureTime</code> 的参数列表和调用：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Func, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">measureTime</span><span class="params">(Func f, Args&amp;&amp;... args)</span> </span>{ <span class="comment">// Args&amp;&amp;... args 是通用引用参数包</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">f</span>(std::forward&lt;Args&gt;(args)...); <span class="comment">// std::forward&lt;Args&gt; 实现完美转发</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Args&amp;&amp;... args</code>：这里的 <code>args</code>
+是一个参数包，其中的每个参数都是一个通用引用。它可以接收任何数量和类型的参数，并且每个参数都能绑定到对应的左值或右值实参。</li>
+<li><code>std::forward&lt;Args&gt;(args)...</code>: 这里
+<code>std::forward</code>
+被应用到参数包中的每一个参数上，将它们以其原始的值类别转发给
+<code>f</code>。</li>
+</ul>
+<p>例如，调用
+<code>measureTime(my_func, some_lvalue, some_rvalue)</code>：</p>
+<ul>
+<li><code>Func</code> 被推导为 <code>my_func</code> 的类型。</li>
+<li><code>Args</code> 被推导为
+<code>(TypeOfLvalue&amp;, TypeOfRvalue)</code>。</li>
+<li><code>Args&amp;&amp;... args</code> 参数包将变成
+<code>(TypeOfLvalue&amp; &amp;&amp; arg1, TypeOfRvalue &amp;&amp; arg2)</code>。</li>
+<li>经过引用折叠，函数参数列表实际上是
+<code>(TypeOfLvalue&amp; arg1, TypeOfRvalue&amp;&amp; arg2)</code>。<code>arg1</code>
+绑定到 <code>some_lvalue</code> (左值)，<code>arg2</code> 绑定到
+<code>some_rvalue</code> (右值)。</li>
+<li>在调用 <code>f(...)</code> 时：
+<ul>
+<li><code>std::forward&lt;TypeOfLvalue&amp;&gt;(arg1)</code> 将
+<code>arg1</code> (内部是左值) 转发为 <code>TypeOfLvalue&amp;</code>
+(原始是左值)。</li>
+<li><code>std::forward&lt;TypeOfRvalue&gt;(arg2)</code> 将
+<code>arg2</code> (内部是左值) 转发为
+<code>TypeOfRvalue&amp;&amp;</code> (原始是右值)。</li>
+</ul></li>
+<li>最终，<code>f</code> 接收到的参数就分别是左值引用和右值引用，与调用
+<code>measureTime</code> 时传入的原始参数类型一致。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>CS-Study</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>删除或修改 Hexo 博客页脚（footer）</title>
     <url>/2025/05/21/%E5%88%A0%E9%99%A4%E6%88%96%E4%BF%AE%E6%94%B9-Hexo-%E5%8D%9A%E5%AE%A2%E9%A1%B5%E8%84%9A%EF%BC%88footer%EF%BC%89/</url>
     <content><![CDATA[<p>要删除或修改 Hexo 博客页脚（footer）中“Theme By Levblanc. Inspired By
@@ -710,189 +893,6 @@ Hexo.”这样的信息，你需要编辑你当前使用主题的模板文件。
       </categories>
       <tags>
         <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>左值&amp;右值</title>
-    <url>/2025/05/21/%E5%B7%A6%E5%80%BC-%E5%8F%B3%E5%80%BC/</url>
-    <content><![CDATA[<p>我们来详细解释一下 C++ 中的左值 (lvalue) 和右值 (rvalue)
-的概念，以及为什么在模板中使用 <code>T&amp;&amp;</code>
-会成为<strong>通用引用 (Universal Reference)</strong> 或
-<strong>转发引用 (Forwarding
-Reference)</strong>，从而能够绑定到左值和右值。</p>
-<p>理解左值和右值是理解 C++ 11
-引入的右值引用、移动语义和完美转发的关键。</p>
-<h3 id="左值-lvalue-和-右值-rvalue">左值 (lvalue) 和 右值 (rvalue)</h3>
-<p>最直观的理解：</p>
-<ul>
-<li><p><strong>左值 (lvalue)：</strong> 可以出现在赋值号 <code>=</code>
-的左边的表达式。它代表一个有<strong>内存地址</strong>、有<strong>持久身份</strong>的对象。你可以反复地使用这个对象，并观察它的状态变化。</p>
-<ul>
-<li><strong>例子：</strong></li>
-</ul></li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">10</span>;     <span class="comment">// x 是一个左值</span></span><br><span class="line"><span class="type">int</span> arr[<span class="number">5</span>];</span><br><span class="line">arr[<span class="number">0</span>] = <span class="number">1</span>;     <span class="comment">// arr[0] 是一个左值</span></span><br><span class="line"><span class="type">int</span>* p = &amp;x;</span><br><span class="line">*p = <span class="number">20</span>;        <span class="comment">// *p 是一个左值</span></span><br><span class="line">std::string s = <span class="string">"hello"</span>; <span class="comment">// s 是一个左值</span></span><br></pre></td></tr></table></figure>
-<pre><code>- 你可以取左值的地址：`&amp;x`, `&amp;arr[0]`, `p`, `&amp;s` 都是合法的。</code></pre>
-<ul>
-<li><p><strong>右值 (rvalue)：</strong> 只能出现在赋值号 <code>=</code>
-的右边的表达式。它代表一个<strong>临时值</strong>，通常是没有固定内存地址、在表达式结束时就会被销毁的对象。它没有持久身份。</p>
-<ul>
-<li><strong>例子：</strong></li>
-</ul></li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> y = x + <span class="number">5</span>;      <span class="comment">// x + 5 的结果是一个临时整数，是右值</span></span><br><span class="line"><span class="type">int</span> z = <span class="number">10</span>;         <span class="comment">// 10 是一个字面量，是右值</span></span><br><span class="line"><span class="function">std::string <span class="title">func</span><span class="params">()</span></span>; <span class="comment">// 假设 func 返回 std::string (按值返回)</span></span><br><span class="line">std::string s2 = <span class="built_in">func</span>(); <span class="comment">// func() 的返回值是一个临时 string，是右值</span></span><br><span class="line"><span class="type">int</span> abs_val = std::<span class="built_in">abs</span>(<span class="number">-5</span>); <span class="comment">// std::abs(-5) 的返回值是一个临时整数，是右值</span></span><br></pre></td></tr></table></figure>
-<pre><code>- 你通常不能直接取右值的地址（除了某些特殊情况，比如字符串字面量 `"hello"`）。</code></pre>
-<p><strong>更规范地说：</strong></p>
-<ul>
-<li><strong>左值 (lvalue)：</strong>
-指的是一个表达式，它的求值结果是一个对象的身份（可以理解为内存地址或名称）。</li>
-<li><strong>右值 (rvalue)：</strong>
-指的是一个表达式，它的求值结果是一个对象的值，但没有一个易于获取的身份（例如，一个临时对象或字面量）。</li>
-</ul>
-<h3 id="c-中的引用类型">C++ 中的引用类型</h3>
-<p>在 C++11 之前，我们主要使用<strong>左值引用
-(<code>&amp;</code>)</strong>：</p>
-<ul>
-<li><code>int&amp; ref = x;</code>：<code>ref</code> 是 <code>x</code>
-的一个左值引用，它必须绑定到一个<strong>左值</strong>。你不能将一个非
-<code>const</code>
-的左值引用绑定到一个右值：<code>int&amp; ref_err = 10;</code>
-(错误)。</li>
-<li><code>const int&amp; const_ref = x;</code>：<code>const_ref</code>
-是 <code>x</code> 的一个常量左值引用。</li>
-<li><code>const int&amp; const_ref2 = x + 5;</code>：<strong>一个常量左值引用
-(<code>const T&amp;</code>)
-可以绑定到右值</strong>。这是为了兼容旧代码，允许你将临时对象传递给接受
-<code>const T&amp;</code> 的函数，避免拷贝。</li>
-</ul>
-<p>C++11 引入了<strong>右值引用 (<code>&amp;&amp;</code>)</strong>：</p>
-<ul>
-<li><code>int&amp;&amp; rref = 10;</code>：<code>rref</code>
-是一个右值引用，它可以绑定到一个<strong>右值</strong>。</li>
-<li>右值引用主要用于<strong>移动语义 (Move
-Semantics)</strong>。它允许你高效地处理临时对象（右值），通过“移动”其资源（如动态分配的内存）而不是进行昂贵的深拷贝。</li>
-<li><strong>一个普通的右值引用 (<code>T&amp;&amp;</code>)
-不能绑定到左值</strong>：<code>int y; int&amp;&amp; rref_err = y;</code>
-(错误)。</li>
-</ul>
-<h3 id="通用引用-universal-reference-转发引用-forwarding-reference">通用引用
-(Universal Reference) / 转发引用 (Forwarding Reference)</h3>
-<p>现在到了你困惑的地方。在 C++
-的<strong>模板</strong>中，当一个函数参数被声明为
-<code>T&amp;&amp;</code>，并且 <code>T</code> 是一个<strong>被推导
-(deduced)</strong> 出来的模板类型参数时，这个 <code>T&amp;&amp;</code>
-就具有了特殊的性质，它不再仅仅是右值引用，而被称为<strong>通用引用
-(Universal Reference)</strong> 或 <strong>转发引用 (Forwarding
-Reference)</strong>。</p>
-<p>它的特殊之处在于：<strong>它能够绑定到左值或右值，具体绑定到哪种取决于传递给模板函数的实际参数的类型。</strong></p>
-<p>这是通过<strong>引用折叠 (Reference Collapsing)</strong>
-规则实现的：</p>
-<ol type="1">
-<li><p><strong>如果传递给模板函数的实参是一个左值
-<code>l</code>：</strong></p>
-<ul>
-<li>模板参数 <code>T</code> 会被推导为左值引用类型，比如
-<code>ActualType&amp;</code>。</li>
-<li>那么函数参数 <code>T&amp;&amp;</code> 就会变成
-<code>(ActualType&amp;)&amp;&amp;</code>。</li>
-<li>根据引用折叠规则 <code>&amp; &amp;&amp;</code> -&gt;
-<code>&amp;</code>，最终函数参数的类型是 <code>ActualType&amp;</code>
-(一个左值引用)。</li>
-<li>所以，当传入左值时，<code>T&amp;&amp;</code>
-参数会实例化为一个左值引用，成功绑定到该左值。</li>
-</ul></li>
-<li><p><strong>如果传递给模板函数的实参是一个右值
-<code>r</code>：</strong></p>
-<ul>
-<li>模板参数 <code>T</code> 会被推导为非引用类型，比如
-<code>ActualType</code>。</li>
-<li>那么函数参数 <code>T&amp;&amp;</code> 就会变成
-<code>(ActualType)&amp;&amp;</code>。</li>
-<li>根据引用折叠规则 非引用 <code>&amp;&amp;</code> -&gt;
-<code>&amp;&amp;</code>，最终函数参数的类型是
-<code>ActualType&amp;&amp;</code> (一个右值引用)。</li>
-<li>所以，当传入右值时，<code>T&amp;&amp;</code>
-参数会实例化为一个右值引用，成功绑定到该右值。</li>
-</ul></li>
-</ol>
-<p><strong>结论：</strong> 在模板中，参数类型为 <code>T&amp;&amp;</code>
-(其中 T 是推导的类型参数)
-的引用，可以根据传入的实参类型，“变形”为左值引用或右值引用。这就是它被称为“通用”或“转发”引用的原因。</p>
-<h3 id="为什么需要-stdforward完美转发">为什么需要
-<code>std::forward</code>？（完美转发）</h3>
-<p>既然通用引用已经可以绑定到左值和右值了，为什么在将参数传递给被测函数
-<code>f</code> 时还需要 <code>std::forward</code> 呢？</p>
-<p>问题在于，一旦参数 <code>args</code> 被绑定并进入
-<code>measureTime</code>
-函数内部，无论它最初是左值还是右值，<strong>它的变量名 <code>args</code>
-在 <code>measureTime</code>
-函数的内部作用域中，永远是一个左值</strong>。</p>
-<p>如果你直接写 <code>f(args...)</code>，<code>args</code>
-会被当作左值传递给 <code>f</code>。如果 <code>f</code>
-有重载版本，一个接受 <code>const T&amp;</code>，一个接受
-<code>T&amp;&amp;</code> (用于移动)，直接传 <code>args</code>
-会总是匹配到接受左值的版本（可能是拷贝构造而不是移动构造），即使原始参数是一个右值。</p>
-<p><code>std::forward</code> 的作用就是<strong>恢复参数的原始值类别
-(Value Category)</strong>。</p>
-<ul>
-<li><code>std::forward&lt;Args&gt;(args)</code>：
-<ul>
-<li>如果 <code>Args</code> 在模板推导时是 <code>ActualType&amp;</code>
-(表明原始参数是左值)，<code>std::forward</code> 会将 <code>args</code>
-强制转换为 <code>ActualType&amp;</code>。</li>
-<li>如果 <code>Args</code> 在模板推导时是 <code>ActualType</code>
-(表明原始参数是右值)，<code>std::forward</code> 会将 <code>args</code>
-强制转换为 <code>ActualType&amp;&amp;</code>。</li>
-</ul></li>
-</ul>
-<p>这样，<code>f(std::forward&lt;Args&gt;(args)...)</code>
-就实现了<strong>完美转发 (Perfect Forwarding)</strong>：如果调用
-<code>measureTime</code> 时传入的是左值，那么 <code>f</code>
-会收到左值；如果传入的是右值，那么 <code>f</code> 会收到右值。这确保了
-<code>f</code>
-内部的逻辑（比如是否触发移动语义）能够根据原始参数的类型正确执行。</p>
-<h3 id="回到-measuretime-函数模板">回到 <code>measureTime</code>
-函数模板</h3>
-<p>现在，我们再来看 <code>measureTime</code> 的参数列表和调用：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Func, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">measureTime</span><span class="params">(Func f, Args&amp;&amp;... args)</span> </span>{ <span class="comment">// Args&amp;&amp;... args 是通用引用参数包</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">f</span>(std::forward&lt;Args&gt;(args)...); <span class="comment">// std::forward&lt;Args&gt; 实现完美转发</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Args&amp;&amp;... args</code>：这里的 <code>args</code>
-是一个参数包，其中的每个参数都是一个通用引用。它可以接收任何数量和类型的参数，并且每个参数都能绑定到对应的左值或右值实参。</li>
-<li><code>std::forward&lt;Args&gt;(args)...</code>: 这里
-<code>std::forward</code>
-被应用到参数包中的每一个参数上，将它们以其原始的值类别转发给
-<code>f</code>。</li>
-</ul>
-<p>例如，调用
-<code>measureTime(my_func, some_lvalue, some_rvalue)</code>：</p>
-<ul>
-<li><code>Func</code> 被推导为 <code>my_func</code> 的类型。</li>
-<li><code>Args</code> 被推导为
-<code>(TypeOfLvalue&amp;, TypeOfRvalue)</code>。</li>
-<li><code>Args&amp;&amp;... args</code> 参数包将变成
-<code>(TypeOfLvalue&amp; &amp;&amp; arg1, TypeOfRvalue &amp;&amp; arg2)</code>。</li>
-<li>经过引用折叠，函数参数列表实际上是
-<code>(TypeOfLvalue&amp; arg1, TypeOfRvalue&amp;&amp; arg2)</code>。<code>arg1</code>
-绑定到 <code>some_lvalue</code> (左值)，<code>arg2</code> 绑定到
-<code>some_rvalue</code> (右值)。</li>
-<li>在调用 <code>f(...)</code> 时：
-<ul>
-<li><code>std::forward&lt;TypeOfLvalue&amp;&gt;(arg1)</code> 将
-<code>arg1</code> (内部是左值) 转发为 <code>TypeOfLvalue&amp;</code>
-(原始是左值)。</li>
-<li><code>std::forward&lt;TypeOfRvalue&gt;(arg2)</code> 将
-<code>arg2</code> (内部是左值) 转发为
-<code>TypeOfRvalue&amp;&amp;</code> (原始是右值)。</li>
-</ul></li>
-<li>最终，<code>f</code> 接收到的参数就分别是左值引用和右值引用，与调用
-<code>measureTime</code> 时传入的原始参数类型一致。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>CS-Study</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
       </tags>
   </entry>
 </search>
