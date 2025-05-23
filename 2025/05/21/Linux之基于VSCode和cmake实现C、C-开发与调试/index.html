@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/my_blog_show/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/my_blog_show/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/my_blog_show/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/my_blog_show/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/my_blog_show/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"char2323.github.io","root":"/my_blog_show/","images":"/my_blog_show/images","scheme":"Mist","darkmode":true,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/my_blog_show/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/my_blog_show/js/config.js" defer></script>
+
+    <meta name="description" content="Linux Vim GCC GDB CMake">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux之基于VSCode和cmake实现C、C++开发与调试">
+<meta property="og:url" content="https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/index.html">
+<meta property="og:site_name" content="自由飞翔的猪仔">
+<meta property="og:description" content="Linux Vim GCC GDB CMake">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-05-21T12:18:51.000Z">
+<meta property="article:modified_time" content="2025-05-21T15:57:55.341Z">
+<meta property="article:author" content="Charmmy">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/","path":"2025/05/21/Linux之基于VSCode和cmake实现C、C-开发与调试/","title":"Linux之基于VSCode和cmake实现C、C++开发与调试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux之基于VSCode和cmake实现C、C++开发与调试 | 自由飞翔的猪仔</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/my_blog_show/js/utils.js" defer></script><script src="/my_blog_show/js/motion.js" defer></script><script src="/my_blog_show/js/sidebar.js" defer></script><script src="/my_blog_show/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous" defer></script>
+<script src="/my_blog_show/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/my_blog_show/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/my_blog_show/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">自由飞翔的猪仔</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/my_blog_show/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/my_blog_show/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/my_blog_show/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/my_blog_show/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E9%87%8D%E8%A6%81%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">Linux重要指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91"><span class="nav-number">2.</span> <span class="nav-text">Vim文件编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vim%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">Vim模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nomal%E6%A8%A1%E5%BC%8F%E5%9F%BA%E6%9C%AC%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">Nomal模式：基本移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#insert%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.2.</span> <span class="nav-text">Insert模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.3.</span> <span class="nav-text">Command模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visual%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.4.</span> <span class="nav-text">VIsual模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E4%B8%8E%E7%BC%96%E8%BE%91"><span class="nav-number">2.2.</span> <span class="nav-text">移动与编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%8D%95%E8%AF%8D%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.2.1.</span> <span class="nav-text">基于单词的移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%90%9C%E7%B4%A2%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.2.2.</span> <span class="nav-text">基于搜索的移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A0%87%E8%AE%B0%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.2.3.</span> <span class="nav-text">基于标记的移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#operatormotionaction"><span class="nav-number">2.2.4.</span> <span class="nav-text">Operator+Motion&#x3D;Action</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">GCC编译器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">编译过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#g%E9%87%8D%E8%A6%81%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">g++重要编译参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">GDB调试器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E8%B0%83%E8%AF%95%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">常用调试命令参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">5.</span> <span class="nav-text">VSCode常用快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake"><span class="nav-number">6.</span> <span class="nav-text">CMake</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7%E4%BB%8B%E7%BB%8D"><span class="nav-number">6.1.</span> <span class="nav-text">语法特性介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%8C%87%E4%BB%A4"><span class="nav-number">6.2.</span> <span class="nav-text">重要指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake%E5%B8%B8%E7%94%A8%E5%8F%98%E9%87%8F"><span class="nav-number">6.3.</span> <span class="nav-text">CMake常用变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake%E7%BC%96%E8%AF%91%E5%B7%A5%E7%A8%8B"><span class="nav-number">6.4.</span> <span class="nav-text">CMake编译工程</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Charmmy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/my_blog_show/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/my_blog_show/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/my_blog_show/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://char2323.github.io/my_blog_show/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/my_blog_show/images/avatar.gif">
+      <meta itemprop="name" content="Charmmy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="自由飞翔的猪仔">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux之基于VSCode和cmake实现C、C++开发与调试 | 自由飞翔的猪仔">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux之基于VSCode和cmake实现C、C++开发与调试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-05-21 20:18:51 / Modified: 23:57:55" itemprop="dateCreated datePublished" datetime="2025-05-21T20:18:51+08:00">2025-05-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/my_blog_show/categories/CS-Study/" itemprop="url" rel="index"><span itemprop="name">CS-Study</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="linux重要指令">Linux重要指令</h2>
+<ul>
+<li><strong>pwd-Print current working directory</strong>
+<ul>
+<li><strong>作用：</strong> 打开当前终端所在的目录</li>
+<li><strong>用法：</strong> pwd</li>
+</ul></li>
+<li><strong>ls-List directory contents</strong>
+<ul>
+<li><strong>作用：</strong>
+列出当前工作目录下的所有文件/文件夹的名称</li>
+<li><strong>用法1：</strong> ls</li>
+<li><strong>用法2：</strong> ls [路径]
+<ul>
+<li>含义：列出指定路径下的所有文件/文件夹的名称</li>
+<li>绝对路径：相对于根目录的路径</li>
+<li>相对路径：相对于当前目录的路径</li>
+</ul></li>
+<li><strong>用法3：</strong> ls 选项
+<ul>
+<li>含义：在列出指定路径下的文件/文件夹的名称，并以指定的格式进行显示
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ls 相对路径</span></span><br><span class="line"><span class="built_in">ls</span> ./ <span class="comment"># 表示当前目录下</span></span><br><span class="line"><span class="built_in">ls</span> ../ <span class="comment"># 上一级目录下</span></span><br><span class="line"><span class="comment">#ls 绝对路径</span></span><br><span class="line"><span class="built_in">ls</span> /home</span><br><span class="line"></span><br><span class="line"><span class="built_in">ls</span> -lah /home</span><br><span class="line"><span class="comment">#选项解释</span></span><br><span class="line">-l 表示list，表示以详细列表的形式进行展示</span><br><span class="line">-a 表示显示所有的文件/文件夹</span><br><span class="line">-h 表示以可读性较高的形式显示</span><br><span class="line"><span class="comment">#ls -l 中‘-’表示该行对应的文档类型为文件，‘d&#x27;表示该行文档类型为文件夹</span></span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul></li>
+<li><strong>cd-change directory</strong>
+<ul>
+<li><strong>作用：</strong> 切换当前的工作目录</li>
+<li><strong>用法1：</strong> cd；cd~ （表示进入home目录）</li>
+<li><strong>用法2：</strong> cd [相对路径]</li>
+<li><strong>用法3：</strong> cd [绝对路径]</li>
+</ul></li>
+<li><strong>mkdir-make directories</strong>
+<ul>
+<li><strong>作用：</strong> 创建目录</li>
+<li><strong>用法1：</strong> mkdir 路径</li>
+<li><strong>用法2：</strong> mkdir -p 路径
+<ul>
+<li>含义：一次性创建多层不存在的目录</li>
+</ul></li>
+<li><strong>用法3：</strong> mkdir 路径1 路径2
+<ul>
+<li>含义：一次性创建多个目录</li>
+</ul></li>
+</ul></li>
+<li><strong>touch-change file timesamps</strong>
+<ul>
+<li><strong>作用：</strong> 创建文件
+<ul>
+<li>touch的作用本来不是创建文件，而是将指定文件的修改时间设置为当前时间。就是假装碰(touch)一下这个文件，假装这个文件被修改了，于是文件的修改时间就被设置为了当前时间。但这带来了一个副作用，就是touch一个不存在的文件的时候，他就会创建这个文件。于是touch就可以承当创建文件的功能。</li>
+</ul></li>
+<li><strong>用法1：</strong> touch [路径]</li>
+<li><strong>用法2：</strong> touch 路径1 路径2 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在当前目录下创建文件</span></span><br><span class="line"><span class="built_in">touch</span> linux.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在上级目录下创建linux文件</span></span><br><span class="line"><span class="built_in">touch</span> ../linux</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在/home/charmmy下创建文件</span></span><br><span class="line"><span class="built_in">touch</span> /home/charmmy/linux.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在当前目录下创建file file.txt两个文件</span></span><br><span class="line"><span class="built_in">touch</span> file file.txt</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><strong>rm-remove file or directories</strong>
+<ul>
+<li><strong>作用：</strong> 删除文件/文件夹</li>
+<li><strong>用法1：</strong> rm [选项] 需要移除的文件路径</li>
+<li><strong>用法2：</strong> rm -rf 需要移除的目录 -r表示递归
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除当前路径下的myfolder文件</span></span><br><span class="line"><span class="built_in">rm</span> -rf myfolder</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除/use路径下的myfolder文件</span></span><br><span class="line"><span class="built_in">rm</span> -rf /usr/myfolder</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><strong>cp-copy files and directories</strong>
+<ul>
+<li><strong>作用：</strong> 复制文件/文件夹到指定的位置</li>
+<li><strong>用法1：</strong> cp 被复制的文件路径 文件被复制到的路径</li>
+<li><strong>用法2：</strong> cp -r 被复制的文件夹路径 文件被复制到的路径
+-r表示递归</li>
+</ul></li>
+<li><strong>mv-move(rename) files</strong>
+<ul>
+<li><strong>作用：</strong> 移动文件到新的位置，或者重命名文件</li>
+<li><strong>用法：</strong> mv 需要移动的文件路径
+需要保存的位置路径</li>
+</ul></li>
+<li><strong>man-an interface to the system reference manuals</strong>
+<ul>
+<li><strong>作用：</strong> 包含了linux中全部命令手册</li>
+<li><strong>用法：</strong> man 命令，按q退出</li>
+</ul></li>
+<li><strong>shutdown -power-off the machine</strong>
+<ul>
+<li><strong>作用：</strong> 关机</li>
+<li><strong>用法：</strong> shut -h now（立即关机）</li>
+</ul></li>
+</ul>
+<h2 id="vim文件编辑">Vim文件编辑</h2>
+<h3 id="vim模式">Vim模式</h3>
+<p>主要的四种模式： - Normal模式：默认进入的模式，也是最常用的模式 -
+Insert模式：插入模式，像正常的文本编辑器一样输入 -
+Command模式：命令模式，在底部输入命令 -
+Visual模式：可视模式，对文本进行选择</p>
+<h4 id="nomal模式基本移动">Nomal模式：基本移动</h4>
+<ul>
+<li><code>hjkl</code>-上下左右</li>
+<li><code>gg</code>-跳到第一行</li>
+<li><code>G</code>-跳到最后一行</li>
+<li><code>Ctrl-u/Ctrl-b</code>-往上翻半页/一页</li>
+<li><code>Ctrl-d/Ctrl-f</code>-往下翻半页/一页</li>
+<li><code>&#123;lineno&#125;gg</code>-跳到第<code>lineno</code>行</li>
+<li><code>zz/zt/zb</code>-光标行设置为屏幕居中/屏幕第一行屏幕最后一行</li>
+</ul>
+<h4 id="insert模式">Insert模式</h4>
+<ul>
+<li><code>i</code>-代表insert，当前光标之前开始输入</li>
+<li><code>a</code>-代表append，当前光标之后开始输入</li>
+<li><code>o</code>-下方插入新的一行，然后开始输入</li>
+<li><code>s</code>-删除当前光标的字符，然后开始输入</li>
+<li><code>I</code>-在本行的开头开始输入</li>
+<li><code>A</code>-在本行的末尾开始输入</li>
+<li><code>O</code>-上方插入新的一行，然后开始输入</li>
+<li><code>S</code>-删除当前行，然后开始输入</li>
+</ul>
+<h4 id="command模式">Command模式</h4>
+<p>Normal模式下输入<code>:</code>进入Command模式 -
+<code>:w</code>-保存当前文件 - <code>:q</code>-退出 -
+<code>:q!</code>-放弃当前更改，然后退出 -
+<code>:wq</code>-保存当前更改，然后退出 -
+<code>:h &#123;command&#125;</code>-显示关于命令的帮助 -
+<code>Esc</code>回到Normal模式</p>
+<h4 id="visual模式">VIsual模式</h4>
+<ul>
+<li>Normal模式下按<code>v</code>进入可视模式</li>
+<li>进入可视模式后可以用Normal模式下的命令选择文本</li>
+<li>Normal模式下按<code>V</code>进入行可视模式，一次选中一行，在需要选中多行时很方便</li>
+<li>剪切：选中后按<code>x</code></li>
+<li>复制：选中后按<code>y</code></li>
+<li>粘贴：<code>p</code></li>
+<li>撤销：<code>u</code></li>
+<li>重做：<code>Ctrl-r</code></li>
+<li><code>Esc</code>回到Normal模式</li>
+</ul>
+<h3 id="移动与编辑">移动与编辑</h3>
+<h4 id="基于单词的移动">基于单词的移动</h4>
+<ul>
+<li><code>w</code> -代表 word，跳转到下一处单词的开头</li>
+<li><code>b</code> -代表 back，跳转到上一处单词的开头</li>
+<li><code>e</code> -代表 end，跳转到下一处单词的结尾</li>
+<li><code>ge</code> - <code>e</code>
+的反向版本，跳转到上一处单词的结尾</li>
+<li><code>WEB</code> 对应的单词的连续的非空字符</li>
+</ul>
+<h4 id="基于搜索的移动">基于搜索的移动</h4>
+<p>行内搜索： - <code>f&#123;char&#125;/t&#123;char&#125;</code> -跳转到本行下一个
+<code>char</code> 字符出现处/前 - <code>;/,</code> -快速向前/向后重复
+<code>ft</code> 查找 - <code>F&#123;char&#125;/T&#123;char&#125;</code> -往前搜索而非往后
+文件中搜索： - <code>/&#123;pattern&#125;</code> -跳转到本文件中下一个
+<code>pattern</code> 出现的地方 - <code>?&#123;pattern&#125;</code>
+-跳转到本文件中上一个 <code>pattern</code> 出现的地方 -
+<code>pattern</code> 可以是正则表达式 - <code>*</code> -等价于
+<code>/&#123;pattern&#125;</code>，<code>pattern</code> 是当前光标下的单词 -
+<code>nN</code> -快速重复 <code>/</code> 查找</p>
+<h4 id="基于标记的移动">基于标记的移动</h4>
+<ul>
+<li><code>m&#123;mark&#125;</code> -把当前位置标记为 <code>mark</code></li>
+<li><code>‵mark</code> -跳转到名为 <code>mark</code> 的标记位置
+<code>mark</code> 是 <code>a-z</code> 的字符
+常用场景：当需要临时离开当前光标处，做一些事情再<strong>快速的</strong>回来</li>
+</ul>
+<p>内置标记： - <code>``</code> -上次跳转前的位置 - <code>`.</code>
+-上次修改的位置 - <code>`^</code> -上次插入的位置</p>
+<p>实用跳转： - <code>^/$</code> -跳转到本行的开始/末尾 - <code>%</code>
+-跳到匹配的配对符（括号等）处</p>
+<h4 id="operatormotionaction">Operator+Motion=Action</h4>
+<p><code>&#123;operator&#125;&#123;motion&#125;</code> -一次编辑动作 常见操作符： -
+<code>c</code> -代表 change，修改，删除内容并进入插入模式 -
+<code>d</code> -代表 delete，删除 - <code>y</code> -代表 yank，复制 -
+<code>v</code> -代表 visual，选中文本，进入可视模式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dgg <span class="comment"># 删除到第一行 </span></span><br><span class="line">ye  <span class="comment"># 复制到单词结尾</span></span><br><span class="line">d$  <span class="comment"># 删除到行尾</span></span><br><span class="line">dt; <span class="comment"># 删除直到分号为止的内容</span></span><br></pre></td></tr></table></figure>
+<p>大部分操作符连续按两次 <code>cc/dd/yy</code> 可以表示为作用在这一行上
+- <code>dd</code> -删除这一行</p>
+<h2 id="gcc编译器">GCC编译器</h2>
+<h3 id="编译过程">编译过程</h3>
+<ol type="1">
+<li><strong>预处理-Pre-Processing //.i文件</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -E选项指示编译器仅对输入文件进行预处理</span></span><br><span class="line">g++ -E test.cpp -o test.i  //.i 文件</span><br></pre></td></tr></table></figure></li>
+<li><strong>编译-Compiling // .s文件</strong><br>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -S 编译选项告诉g++在为C++代码产生类汇编语言文件后停止编译</span></span><br><span class="line"><span class="comment"># g++产生的汇编语言文件缺省扩展名是 .s</span></span><br><span class="line">g++ -S test.i -o test.s</span><br></pre></td></tr></table></figure></li>
+<li><strong>汇编-Assembling //.o文件</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -c 选项告诉g++把源代码编译为机器语言的目标代码</span></span><br><span class="line"><span class="comment">#缺省时g++建立的目标代码文件有一个.o的扩展名</span></span><br><span class="line">g++ -c test.s -o test.o</span><br></pre></td></tr></table></figure></li>
+<li><strong>链接-Linking //.bin文件</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -o 编译选项来为将产生的可执行文件用指定的文件名</span></span><br><span class="line">g++ test.o -o <span class="built_in">test</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><code>g++ test.cpp -o test</code>其实就可以把上面的操作汇总</p>
+<h3 id="g重要编译参数">g++重要编译参数</h3>
+<ol type="1">
+<li><strong>-g</strong> 编译带调试信息的可执行文件
+<code>g++ -g test.cpp -o test</code></li>
+<li><strong>-O[n]</strong> 优化源代码(一般用O2)并输出可执行文件
+<code>g++ test.cpp -O2 -o test</code>或者
+<code>g++ -O2 test.cpp</code></li>
+<li><strong>-l 和 -L 指定库文件|指定库文件路径 </strong>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -l参数就是用来指定程序要链接的库，-l参数紧接着就是库名</span></span><br><span class="line"><span class="comment"># 在 /lin 和 /usr/lin 以及 /usr/local/lib 里的库直接用-l参数就可以链接</span></span><br><span class="line"><span class="comment"># 链接glog库</span></span><br><span class="line">g++ -lglog test.cpp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果库文件没有放在上面三个目录里，需要使用-L参数指定库文件所在目录</span></span><br><span class="line"><span class="comment"># -L参数跟着的是库文件所在的目录名</span></span><br><span class="line"><span class="comment"># 链接mytest库，libmytest.so在/home/charmmy/mytestlibfolder目录下</span></span><br><span class="line">g++ -L/home/charmmy/mytestlibfolder -lmytest test.cpp</span><br></pre></td></tr></table></figure></li>
+<li><strong>-I (Include)</strong> 指定头文件搜索目录 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/include目录一般是不用指定的，gcc知道从哪里去找，但是如果头文件不在/usr/include里，我们就要用-I参数指定了，比如头文件放在/myinclude里，那么编译命令行就要加上-I/myinclude了。-I可以用相对路径，比如头文件在当前目录，可以用 -I. 来指定</span></span><br><span class="line">g++ -I/myinclude test.cpp</span><br></pre></td></tr></table></figure></li>
+<li><strong>Wall</strong> 打印警告信息
+<code>g++ -Wall test.cpp</code></li>
+<li><strong>-w</strong> 关闭警告信息 <code>g++ -w test.cpp</code></li>
+<li><strong>-std=c++11</strong> 设置编译标准
+<code>g++ -std=c++11 test.cpp</code></li>
+<li><strong>-o</strong> 指定输出文件名
+<code>g++ test.cpp -o test</code></li>
+<li><strong>-D</strong> 定义宏</li>
+</ol>
+<h2 id="gdb调试器">GDB调试器</h2>
+<h3 id="常用调试命令参数">常用调试命令参数</h3>
+<p>调试开始：执行<strong>gdb[exefilename]</strong>，进入gdb调试程序，其中exefilename为要调试的可执行文件名
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以下命令后括号内为命令的简化使用，如run(r)，直接输入命令r就代表命令run</span></span><br><span class="line"></span><br><span class="line">$(gdb)<span class="built_in">help</span>(h) <span class="comment"># 查看命令帮助，具体命令查询在gdb中输入help+命令</span></span><br><span class="line"></span><br><span class="line">$(gdb)run(r) <span class="comment"># 重新开始运行文件(run-text：加载文本文件，run-bin：加载二进制文件)</span></span><br><span class="line"></span><br><span class="line">$(gdb)start <span class="comment"># 单步执行，运行程序，停在第一行执行语句</span></span><br><span class="line"></span><br><span class="line">$(gdb)list(l) <span class="comment"># 查看源代码(list-n)从第n行开始查看代码，list+函数名：查看具体函数</span></span><br><span class="line"></span><br><span class="line">$(gdb)<span class="built_in">set</span> <span class="comment"># 设置变量的值</span></span><br><span class="line"></span><br><span class="line">$(gdb)next(n) <span class="comment"># 单步调试(逐过程，函数直接执行)</span></span><br><span class="line"></span><br><span class="line">$(gdb)step(s) <span class="comment"># 单步调试(逐语句：跳入自定义函数内部执行)</span></span><br><span class="line"></span><br><span class="line">$(gdb)backtrace(bt) <span class="comment"># 查看函数的调用的栈帧和层级关系</span></span><br><span class="line"></span><br><span class="line">$(gdb)frame(f) <span class="comment"># 切换函数的栈帧</span></span><br><span class="line"></span><br><span class="line">$(gdb)info(i) <span class="comment"># 查看函数内部局部变量的数值</span></span><br><span class="line"></span><br><span class="line">$(gdb)finish <span class="comment"># 结束当前函数，返回到 函数调用点</span></span><br><span class="line"></span><br><span class="line">$(gdb)<span class="built_in">continue</span>(c) <span class="comment"># 继续运行</span></span><br><span class="line"></span><br><span class="line">$(gdb)<span class="built_in">print</span>(p) <span class="comment"># 打印值及地址</span></span><br><span class="line"></span><br><span class="line">$(gdb)quit(q) <span class="comment"># 推出gdb</span></span><br><span class="line"></span><br><span class="line">$(gdb)<span class="built_in">break</span>+num(b) <span class="comment"># 在第num行设置断点</span></span><br><span class="line"></span><br><span class="line">$(gdb)info breakpoints <span class="comment"># 查看当前设置的所有断点</span></span><br><span class="line"></span><br><span class="line">$(gdb)delete breakpoints num(d) <span class="comment"># 删除第num个断点</span></span><br><span class="line"></span><br><span class="line">$(gdb)display <span class="comment"># 追踪查看具体变量值</span></span><br><span class="line"></span><br><span class="line">$(gdb)undisplay <span class="comment"># 取消追踪查看变量</span></span><br><span class="line"></span><br><span class="line">$(gdb)watch <span class="comment"># 被设置观察点的变量发生修改时，打印显示</span></span><br><span class="line"></span><br><span class="line">$(gdb)i watch <span class="comment"># 显示观察点</span></span><br><span class="line"></span><br><span class="line">$(gdb)<span class="built_in">enable</span> breakpoints <span class="comment"># 启用断点</span></span><br><span class="line"></span><br><span class="line">$(gdb)<span class="built_in">disable</span> breakpoints <span class="comment"># 禁用断点</span></span><br><span class="line"></span><br><span class="line">$(gdb)x <span class="comment"># 查看内存x/20xw 显示20个单元，16进制，4字节每单元</span></span><br><span class="line"></span><br><span class="line">$(gdb)run argv[1] argv[2] <span class="comment"># 调试时命令行传参</span></span><br><span class="line"></span><br><span class="line">$(gdb)<span class="built_in">set</span> follow-fork-mode child <span class="comment"># makefile项目管理，选择跟踪父子进程(fork())</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Tips</strong> 1.
+编译程序时需要加上-g之后才能用gdb进行调试：<code>gcc -g main.c -o main</code>
+2. 回车键：重复上一条命令</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>** argv)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> N=<span class="number">100</span>;</span><br><span class="line">	<span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> i=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;=N)&#123;</span><br><span class="line">	sum+=i;</span><br><span class="line">	i++;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;sum=&quot;</span>&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;The program is over.&quot;</span>&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="vscode常用快捷键">VSCode常用快捷键</h2>
+<table>
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 17%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>功能</th>
+<th>快捷键</th>
+<th>功能</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>转到文件/其他常用操作</td>
+<td><code>ctrl+p</code></td>
+<td>关闭当前文件</td>
+<td><code>ctrl+w</code></td>
+</tr>
+<tr class="even">
+<td>打开命令面板</td>
+<td><code>ctrl+shift+p</code></td>
+<td>当前行上移/下移</td>
+<td><code>Alt+up/down</code></td>
+</tr>
+<tr class="odd">
+<td>打开终端</td>
+<td><code>ctrl+</code></td>
+<td>变量统一命名</td>
+<td><code>F2</code></td>
+</tr>
+<tr class="even">
+<td>关闭侧边栏</td>
+<td><code>ctrl+b</code></td>
+<td>转到定义处</td>
+<td><code>F12</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="cmake">CMake</h2>
+<h3 id="语法特性介绍">语法特性介绍</h3>
+<ul>
+<li><strong>基本语法格式：指令（参数1 参数2）</strong>
+<ul>
+<li>参数使用括弧括起</li>
+<li>参数之间使用空格或者分号隔开</li>
+</ul></li>
+<li><strong>指令是大小写无关的，参数和变量是大小写相关的</strong></li>
+<li><strong>变量使用<code>$&#123;&#125;</code>方式取值，但是在<code>IF</code>控制语句中是直接使用变量名</strong>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(HELLO hello.cpp)</span><br><span class="line"><span class="keyword">add_executable</span>(hello main.cpp hello.cpp)</span><br><span class="line"><span class="keyword">ADD_EXECUTABLE</span>(hello main.cpp <span class="variable">$&#123;HELLO&#125;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="重要指令">重要指令</h3>
+<ul>
+<li><code>cmake_minimum_required</code>-指定CMake的最小版本要求
+<ul>
+<li>语法：<code>cmake_minimum_required(VERSION versionNumber[FATAL_ERROR])</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake最小版本要求为2.8.3</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>.<span class="number">3</span>)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>project</code>-定义工程名称，并可指定工程支持的语言
+<ul>
+<li>语法：<code>project(projectname[CXX][X][Java]</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定工程名为helloworld</span></span><br><span class="line"><span class="keyword">project</span>(helloworld)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>set</code>-显示的定义变量
+<ul>
+<li>语法：<code>set(VAR [VALUE][CACHE TYPR DOCSTRING [FORCE]])</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义SRC变量，其值为sayhello.cpp hello.cpp</span></span><br><span class="line"><span class="keyword">set</span>(SRC sayhello.cpp hello.cpp)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>include_directories</code>-向工程添加多个特定的头文件搜索路径–&gt;相当于指定g++编译器的-I参数
+<ul>
+<li>语法：<code>include_directories([AFTER|BEFORE][SYSTEM] dir1 dir2...)</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将/usr/include/myincludefolder 和 ./include 添加到头文件搜索路径</span></span><br><span class="line"><span class="keyword">include_directories</span>(/usr/<span class="keyword">include</span>/myincludefolder ./<span class="keyword">include</span>)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>link_directories</code>-向工程添加多个特定的库文件搜索路径——&gt;相当于指定g++编译器的-L参数
+<ul>
+<li>语法：<code>link_directories(dir1 dir2...)</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将/usr/lib/mylibfolder 和 ./lib 添加到库文件搜索路径</span></span><br><span class="line"><span class="keyword">link_directories</span>(/usr/lib/mylibfolder ./lib)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>add_library</code>-生成库文件
+<ul>
+<li>语法：<code>add_library(libname [SHARED|STATIC|MODULE][EXCLUDE_FROM_ALL] source1 source2...sourceN)</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过变量SRC生成libhello.so共享库</span></span><br><span class="line"><span class="keyword">add_library</span>(hello SHARED <span class="variable">$&#123;SRC&#125;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>add_compile_options</code>-添加编译参数
+<ul>
+<li>语法：<code>add_compile_options(&lt;option&gt;...)</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加编译参数 -wall -std=c++11 -o2</span></span><br><span class="line"><span class="keyword">add_compile_options</span>(-Wall -std=c++<span class="number">11</span> -o2)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>add_executable</code>-生成可执行文件
+<ul>
+<li>语法：<code>add_executable(exename source1 source2 ... sourceN)</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译main.cpp生成可执行文件main</span></span><br><span class="line"><span class="keyword">add_executable</span>(main main.cpp)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>target_link_libraries</code>-为target添加需要链接的共享库–&gt;相当于指定g++编译器-l参数
+<ul>
+<li>语法：<code>target_link_libraries(target library1&lt;debug|optimized&gt; library2...</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将hello动态库链接到可执行文件main</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(main hello)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>add_subdirectory</code>-向当前工程添加存放源文件的子目录，并可以指定中间二进制和目标二进制存放的位置
+<ul>
+<li>语法：<code>add_subdirectory(source_dir[binary_dir][EXCLUDE_FORM_ALL])</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加src子目录，src中需要有一个CMakeLists.txt</span></span><br><span class="line"><span class="keyword">add_subdirectory</span>(src)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>aux_source_directory</code>-发现一个目录下所有源代码文件并将列表存储在一个变量中，这个指令临时被用来自动构建源文件列表
+<ul>
+<li>语法：<code>aux_source_directory(dir VARIABLE)</code>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义SRC变量，其值是当前目录下所有的源代码文件</span></span><br><span class="line">auc_source_directory(. SRC)</span><br><span class="line"><span class="comment"># 编译SRC变量所代表的源代码文件，生成main可执行文件</span></span><br><span class="line"><span class="keyword">add_executable</span>(main <span class="variable">$&#123;SRC&#125;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
+<h3 id="cmake常用变量">CMake常用变量</h3>
+<ul>
+<li><p><code>CMAKE_C_FLAGS</code>-gcc编译选项</p></li>
+<li><p><code>CMAKE_CXX_FLAGS</code>-g++编译选项 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在CMAKE_CXX_FLAGS编译选项后追加-std=c++11</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_FLAGS<span class="string">&quot;$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11&quot;</span>)</span><br></pre></td></tr></table></figure></p></li>
+<li><p><code>CMAKE_BUILD_TYPE</code>-编译类型(Debug,Release)
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设定编译类型为debug，调试时需要选择debug</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_BUILD_TYPE Debug)</span><br><span class="line"><span class="comment"># 设定编译类型为release，发布时需要选择release</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_BUILD_TYPE Release)</span><br></pre></td></tr></table></figure></p></li>
+<li><p><code>CMAKE_BINARY_DIR</code> <code>PROJECT_BINARY_DIR</code>
+<code>&lt;projectname&gt;_BINARY_DIR</code></p>
+<ol type="1">
+<li>这三个变量代指的内容是一样的</li>
+<li>如果是<code>in source build</code>，指的就是工程顶层目录</li>
+<li>如果是<code>out-of-source</code>编译，指的是工程编译发生的目录</li>
+<li><code>PROJECT_BINARY_DIR</code>与其他指令稍有不同，不过可以暂且理解为一致的</li>
+</ol></li>
+<li><p><code>CMAKE_SOURCE_DIR</code> <code>PROJECT_SOURCE_DIR</code>
+<code>&lt;projectname&gt;_SOURCE_DIR</code></p>
+<ol type="1">
+<li>这三个变量代指的内容是一致的，不论采用何种编译方式，都是工程顶层目录</li>
+<li>也就是在<code>in source bulid</code>时，与<code>MAKE_BINARY_DIR</code>等变量一致</li>
+<li><code>PROJECT_SOURCE_DIR</code>与其他指令稍有不同，不过可以暂且理解为一致的</li>
+</ol></li>
+<li><p><code>CMAKE_C_COMPILER</code>-指定C编译器</p></li>
+<li><p><code>CMAKE_CXX_COMPILER</code>-指定C++编译器</p></li>
+<li><p><code>EXECUTABLE_OUTPUT_PATH</code>-可执行文件输出的存放路径</p></li>
+<li><p><code>LIBRARY_OUTPUT_PATH</code>-库文件输出的存放路径</p></li>
+</ul>
+<h3 id="cmake编译工程">CMake编译工程</h3>
+<p>CMake目录结构：项目主目录存在一个CMakeLists.txt文件</p>
+<p><strong>两种方式设置编译规则：</strong> 1.
+包含源文件的子文件夹包含CMakeList.txt文件，主目录的CMakeList.txt通过<code>add_subdirectory</code>添加子目录即可；
+2.
+包含源文件的自文件夹未包含CMakeList.txt文件，子目录编译规则体现在主目录的CMakeList.txt中</p>
+<p><strong>编译流程：</strong> 1. 手动编写CMakeList.txt 2.
+执行命令<code>cmake PATH</code>生成Makefile(PATH是顶层CMakeList.txt所在的目录)
+3. 指定命令<code>make</code>进行编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># important tips</span></span><br><span class="line">.   <span class="comment"># 表示当前目录</span></span><br><span class="line">./  <span class="comment"># 表示当前目录</span></span><br><span class="line"></span><br><span class="line">..  <span class="comment"># 表示上级目录</span></span><br><span class="line">../ <span class="comment"># 表示上级目录</span></span><br></pre></td></tr></table></figure>
+<p><strong>内部构建：</strong> <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在当前目录下，编译本目录的CMakeLists.txt，生成Makefile和其他文件</span></span><br><span class="line">cmake .</span><br><span class="line"></span><br><span class="line"><span class="comment">#执行make命令，生成target</span></span><br><span class="line">make</span><br></pre></td></tr></table></figure></p>
+<p>推荐使用<strong>外部构建(out-of-cource
+build)</strong>，将编译输出文件与源文件放到不同目录中 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 外部构建</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.在当前目录下，创建build文件夹</span></span><br><span class="line">mkdir build</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.进入到build文件夹</span></span><br><span class="line">cd build</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.编译上级目录的CMakeLists.txt，生成Makefile和其他文件</span></span><br><span class="line">cmake ..</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.执行make命令，生成target</span></span><br><span class="line">make</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/my_blog_show/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/my_blog_show/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/my_blog_show/2025/05/21/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%BD%9C%E4%B8%9A%EF%BC%9A%E6%8F%92%E5%80%BC%E4%B8%8E%E6%8B%9F%E5%90%88/" rel="next" title="数值分析作业：插值与拟合">
+                  数值分析作业：插值与拟合 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Charmmy</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
