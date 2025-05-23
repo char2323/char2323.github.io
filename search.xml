@@ -29,6 +29,103 @@
       </tags>
   </entry>
   <entry>
+    <title>主题</title>
+    <url>/2025/05/22/%E4%B8%BB%E9%A2%98/</url>
+    <content><![CDATA[<ol type="1">
+<li><strong>NexT</strong>
+<ul>
+<li><strong>特点：</strong> 这是 Hexo
+生态中最流行、功能最强大的主题之一。它有多种样式（Scheme）可选，从极简到稍复杂都有，但核心设计理念是简洁。</li>
+<li><strong>TOC：</strong> NexT 对 TOC
+的支持非常完善，通常在侧边栏显示，并且支持滚动高亮当前标题。配置起来非常方便，在主题的
+<code>_config.yml</code> 中即可开启和调整。</li>
+<li><strong>优点：</strong>
+社区活跃，文档丰富，更新及时，扩展性强。</li>
+<li><strong>缺点：</strong>
+功能多意味着配置项也多，初次上手可能需要花点时间熟悉。</li>
+<li><strong>GitHub:</strong> <a href="https://github.com/next-theme/hexo-theme-next">https://github.com/next-theme/hexo-theme-next</a></li>
+</ul></li>
+<li><strong>Volantis</strong>
+<ul>
+<li><strong>特点：</strong> Volantis
+是一个设计非常现代、漂亮且功能强大的主题。它在简洁的同时，提供了很多吸引人的
+UI 元素和交互效果。</li>
+<li><strong>TOC：</strong> 对 TOC
+的支持也非常好，通常在侧边栏以浮动或固定形式显示，支持平滑滚动和高亮。</li>
+<li><strong>优点：</strong> UI/UX
+体验极佳，功能丰富且可配置性高，文档详细。</li>
+<li><strong>缺点：</strong>
+相比纯粹的极简主题，功能和样式会多一些，配置项也较多。</li>
+<li><strong>GitHub:</strong> <a href="https://github.com/volantis-x/hexo-theme-volantis">https://github.com/volantis-x/hexo-theme-volantis</a></li>
+</ul></li>
+<li><strong>Butterfly</strong>
+<ul>
+<li><strong>特点：</strong> Butterfly 是一个非常流行且美观的 Hexo
+主题，设计上注重细节和视觉效果，但整体依然保持清晰的结构。</li>
+<li><strong>TOC：</strong> 内置了优秀的 TOC
+功能，通常在文章侧边栏显示，体验流畅。</li>
+<li><strong>优点：</strong>
+界面现代美观，功能丰富，易于定制，文档清晰。</li>
+<li><strong>缺点：</strong>
+可能会被认为不是“极致”的极简，因为它提供了很多视觉和交互上的增强。</li>
+<li><strong>GitHub:</strong> <a href="https://github.com/jerryc127/hexo-theme-butterfly">https://github.com/jerryc127/hexo-theme-butterfly</a></li>
+</ul></li>
+<li><strong>Icarus</strong>
+<ul>
+<li><strong>特点：</strong> Icarus 是一个设计简洁、注重内容的 Hexo
+主题，响应式良好。它提供了几种布局（Layout）选择，可以适应不同的内容展示需求。</li>
+<li><strong>TOC：</strong> 对 TOC
+有很好的支持，通常在文章页面侧边栏显示。</li>
+<li><strong>优点：</strong> 简洁干净，性能优化良好，配置相对直接。</li>
+<li><strong>缺点：</strong> 可能没有 NexT 或 Volantis
+那么多的高级定制选项。</li>
+<li><strong>GitHub:</strong> <a href="https://github.com/ppoffice/hexo-theme-icarus">https://github.com/ppoffice/hexo-theme-icarus</a></li>
+</ul></li>
+<li><strong>Fluid</strong>
+<ul>
+<li><strong>特点：</strong> Fluid
+主题以其简洁优雅的设计和丰富的功能而闻名。它在视觉上非常清爽，同时提供了强大的内容组织和呈现能力。</li>
+<li><strong>TOC：</strong> 内置了方便易用的 TOC
+功能，支持多种显示方式，并且交互体验良好。</li>
+<li><strong>优点：</strong>
+设计感强，功能全面，文档详细，社区支持较好。</li>
+<li><strong>缺点：</strong> 相对较新，但发展迅速。</li>
+<li><strong>GitHub:</strong> <a href="https://github.com/fluid-dev/hexo-theme-fluid">https://github.com/fluid-dev/hexo-theme-fluid</a></li>
+</ul></li>
+</ol>
+<p><strong>如何选择：</strong></p>
+<ul>
+<li><strong>如果你追求极致的功能和社区支持，同时能接受一点配置复杂度，选
+NexT。</strong></li>
+<li><strong>如果你希望现代、美观且功能强大的主题，但又不想太复杂，可以考虑
+Volantis 或 Butterfly。</strong></li>
+<li><strong>如果你更看重简洁和性能，对高级功能需求不高，Icarus
+也是一个不错的选择。</strong></li>
+<li><strong>如果你喜欢优雅的设计和平衡的功能性，Fluid
+是一个非常值得尝试的选项。</strong></li>
+</ul>
+<p><strong>安装和配置步骤（以 NexT 为例，其他主题类似）：</strong></p>
+<ol type="1">
+<li><strong>安装主题：</strong> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> your-hexo-blog-root</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></li>
+<li><strong>修改 Hexo 主配置文件：</strong> 打开
+<code>_config.yml</code> (Hexo 根目录下的那个)，找到 <code>theme:</code>
+字段，修改为： <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span> <span class="comment"># 或者 volantis, butterfly, icarus, fluid</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>配置主题（开启 TOC）：</strong> 打开主题自己的配置文件
+<code>themes/next/_config.yml</code> (或者你选择的主题的配置文件)，搜索
+<code>toc</code> 相关的配置项，通常会有一个 <code>enable: true</code>
+这样的选项，确保它被开启。具体配置项请参考你选择主题的官方文档。</li>
+<li><strong>清除和生成：</strong> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>访问你的博客，并打开一篇带有标题结构的文章，就应该能看到目录了。希望这能帮到你！</p>
+]]></content>
+      <categories>
+        <category>CS-Study</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux之基于VSCode和cmake实现C、C++开发与调试</title>
     <url>/2025/05/21/Linux%E4%B9%8B%E5%9F%BA%E4%BA%8EVSCode%E5%92%8Ccmake%E5%AE%9E%E7%8E%B0C%E3%80%81C-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%B0%83%E8%AF%95/</url>
     <content><![CDATA[<h2 id="linux重要指令">Linux重要指令</h2>
@@ -399,94 +496,65 @@ build)</strong>，将编译输出文件与源文件放到不同目录中 <figure
       </tags>
   </entry>
   <entry>
-    <title>主题</title>
-    <url>/2025/05/22/%E4%B8%BB%E9%A2%98/</url>
-    <content><![CDATA[<ol type="1">
-<li><strong>NexT</strong>
-<ul>
-<li><strong>特点：</strong> 这是 Hexo
-生态中最流行、功能最强大的主题之一。它有多种样式（Scheme）可选，从极简到稍复杂都有，但核心设计理念是简洁。</li>
-<li><strong>TOC：</strong> NexT 对 TOC
-的支持非常完善，通常在侧边栏显示，并且支持滚动高亮当前标题。配置起来非常方便，在主题的
-<code>_config.yml</code> 中即可开启和调整。</li>
-<li><strong>优点：</strong>
-社区活跃，文档丰富，更新及时，扩展性强。</li>
-<li><strong>缺点：</strong>
-功能多意味着配置项也多，初次上手可能需要花点时间熟悉。</li>
-<li><strong>GitHub:</strong> <a href="https://github.com/next-theme/hexo-theme-next">https://github.com/next-theme/hexo-theme-next</a></li>
-</ul></li>
-<li><strong>Volantis</strong>
-<ul>
-<li><strong>特点：</strong> Volantis
-是一个设计非常现代、漂亮且功能强大的主题。它在简洁的同时，提供了很多吸引人的
-UI 元素和交互效果。</li>
-<li><strong>TOC：</strong> 对 TOC
-的支持也非常好，通常在侧边栏以浮动或固定形式显示，支持平滑滚动和高亮。</li>
-<li><strong>优点：</strong> UI/UX
-体验极佳，功能丰富且可配置性高，文档详细。</li>
-<li><strong>缺点：</strong>
-相比纯粹的极简主题，功能和样式会多一些，配置项也较多。</li>
-<li><strong>GitHub:</strong> <a href="https://github.com/volantis-x/hexo-theme-volantis">https://github.com/volantis-x/hexo-theme-volantis</a></li>
-</ul></li>
-<li><strong>Butterfly</strong>
-<ul>
-<li><strong>特点：</strong> Butterfly 是一个非常流行且美观的 Hexo
-主题，设计上注重细节和视觉效果，但整体依然保持清晰的结构。</li>
-<li><strong>TOC：</strong> 内置了优秀的 TOC
-功能，通常在文章侧边栏显示，体验流畅。</li>
-<li><strong>优点：</strong>
-界面现代美观，功能丰富，易于定制，文档清晰。</li>
-<li><strong>缺点：</strong>
-可能会被认为不是“极致”的极简，因为它提供了很多视觉和交互上的增强。</li>
-<li><strong>GitHub:</strong> <a href="https://github.com/jerryc127/hexo-theme-butterfly">https://github.com/jerryc127/hexo-theme-butterfly</a></li>
-</ul></li>
-<li><strong>Icarus</strong>
-<ul>
-<li><strong>特点：</strong> Icarus 是一个设计简洁、注重内容的 Hexo
-主题，响应式良好。它提供了几种布局（Layout）选择，可以适应不同的内容展示需求。</li>
-<li><strong>TOC：</strong> 对 TOC
-有很好的支持，通常在文章页面侧边栏显示。</li>
-<li><strong>优点：</strong> 简洁干净，性能优化良好，配置相对直接。</li>
-<li><strong>缺点：</strong> 可能没有 NexT 或 Volantis
-那么多的高级定制选项。</li>
-<li><strong>GitHub:</strong> <a href="https://github.com/ppoffice/hexo-theme-icarus">https://github.com/ppoffice/hexo-theme-icarus</a></li>
-</ul></li>
-<li><strong>Fluid</strong>
-<ul>
-<li><strong>特点：</strong> Fluid
-主题以其简洁优雅的设计和丰富的功能而闻名。它在视觉上非常清爽，同时提供了强大的内容组织和呈现能力。</li>
-<li><strong>TOC：</strong> 内置了方便易用的 TOC
-功能，支持多种显示方式，并且交互体验良好。</li>
-<li><strong>优点：</strong>
-设计感强，功能全面，文档详细，社区支持较好。</li>
-<li><strong>缺点：</strong> 相对较新，但发展迅速。</li>
-<li><strong>GitHub:</strong> <a href="https://github.com/fluid-dev/hexo-theme-fluid">https://github.com/fluid-dev/hexo-theme-fluid</a></li>
-</ul></li>
-</ol>
-<p><strong>如何选择：</strong></p>
-<ul>
-<li><strong>如果你追求极致的功能和社区支持，同时能接受一点配置复杂度，选
-NexT。</strong></li>
-<li><strong>如果你希望现代、美观且功能强大的主题，但又不想太复杂，可以考虑
-Volantis 或 Butterfly。</strong></li>
-<li><strong>如果你更看重简洁和性能，对高级功能需求不高，Icarus
-也是一个不错的选择。</strong></li>
-<li><strong>如果你喜欢优雅的设计和平衡的功能性，Fluid
-是一个非常值得尝试的选项。</strong></li>
-</ul>
-<p><strong>安装和配置步骤（以 NexT 为例，其他主题类似）：</strong></p>
+    <title>删除或修改 Hexo 博客页脚（footer）</title>
+    <url>/2025/05/21/%E5%88%A0%E9%99%A4%E6%88%96%E4%BF%AE%E6%94%B9-Hexo-%E5%8D%9A%E5%AE%A2%E9%A1%B5%E8%84%9A%EF%BC%88footer%EF%BC%89/</url>
+    <content><![CDATA[<p>要删除或修改 Hexo 博客页脚（footer）中“Theme By Levblanc. Inspired By
+Clean Blog. Powered By
+Hexo.”这样的信息，你需要编辑你当前使用主题的模板文件。</p>
+<p>这些信息通常被称为<strong>主题版权信息</strong>或<strong>Powered By
+信息</strong>。</p>
+<p>以下是操作步骤：</p>
 <ol type="1">
-<li><strong>安装主题：</strong> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> your-hexo-blog-root</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></li>
-<li><strong>修改 Hexo 主配置文件：</strong> 打开
-<code>_config.yml</code> (Hexo 根目录下的那个)，找到 <code>theme:</code>
-字段，修改为： <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span> <span class="comment"># 或者 volantis, butterfly, icarus, fluid</span></span><br></pre></td></tr></table></figure></li>
-<li><strong>配置主题（开启 TOC）：</strong> 打开主题自己的配置文件
-<code>themes/next/_config.yml</code> (或者你选择的主题的配置文件)，搜索
-<code>toc</code> 相关的配置项，通常会有一个 <code>enable: true</code>
-这样的选项，确保它被开启。具体配置项请参考你选择主题的官方文档。</li>
-<li><strong>清除和生成：</strong> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>确定你当前使用的主题：</strong> 打开你的 Hexo 根目录下的
+<code>_config.yml</code> 文件。找到 <code>theme</code>
+字段，它会告诉你当前正在使用哪个主题。例如：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">levblanc</span> <span class="comment"># 假设你的主题名是 levblanc</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>找到主题的布局文件：</strong> 进入
+<code>themes/你的主题名/</code> 目录。
+页脚信息通常位于主题的布局文件（<code>layout</code>
+文件夹）中。你需要寻找的文件可能是：</p>
+<ul>
+<li><code>themes/你的主题名/layout/_partial/footer.ejs</code> (或
+<code>.pug</code>, <code>.swig</code>，取决于主题使用的模板引擎)</li>
+<li><code>themes/你的主题名/layout/footer.ejs</code></li>
+<li><code>themes/你的主题名/layout/layout.ejs</code>
+(如果页脚直接集成在主布局文件中)</li>
+</ul>
+<p>根据你提供的图片，主题名称可能是
+<code>Levblanc</code>。所以，你可能会在
+<code>themes/levblanc/layout/_partial/footer.ejs</code>
+或类似路径中找到相关代码。</p></li>
+<li><p><strong>编辑文件并删除/修改代码：</strong>
+打开找到的相应文件。使用文本编辑器搜索图片中显示的文字，例如 “Levblanc”,
+“Clean Blog”, “Hexo” 等关键词。</p>
+<p>你可能会看到类似以下的代码片段：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"copyright"</span>&gt;</span></span><br><span class="line">    <span class="symbol">&amp;copy;</span> &lt;%= date(new Date(), 'YYYY') %&gt; &lt;%= config.author || config.title %&gt;. All Rights Reserved.</span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    Theme By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/Levblanc"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Levblanc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>. Inspired By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/your-clean-blog-repo"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Clean Blog<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line">    Powered By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://hexo.io/"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Theme By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0);"</span>&gt;</span>Levblanc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>. Inspired By Clean Blog. Powered By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://hexo.io/"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>你可以选择：</strong></p>
+<ul>
+<li><strong>直接删除：</strong> 将包含这些文字的整个 HTML 标签（通常是
+<code>&lt;p&gt;</code> 或 <code>&lt;div&gt;</code>）删除。</li>
+<li><strong>修改：</strong> 将文本改为你自己的信息，例如 “由
+[你的名字/博客名] 提供”。</li>
+<li><strong>注释掉：</strong> 如果你不确定，可以先用 HTML 注释 ``
+将其注释掉，以便将来恢复。</li>
+</ul>
+<p><strong>请注意：</strong></p>
+<ul>
+<li>修改主题文件时，最好先<strong>备份</strong>一下。</li>
+<li>某些主题可能在<strong>主题的 <code>_config.yml</code>
+文件</strong>中提供了修改这些信息的选项。优先检查主题自身的配置文件，因为那样更新主题时你的修改不会被覆盖。在
+<code>themes/你的主题名/_config.yml</code> 中搜索
+<code>footer</code>、<code>copyright</code>、<code>powered_by</code>
+等关键词。如果有提供选项，直接在 <code>_config.yml</code>
+修改即可。</li>
+</ul></li>
+<li><p><strong>保存并重新生成：</strong> 保存你修改的文件后，回到 Hexo
+根目录，运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean    <span class="comment"># 清除缓存</span></span><br><span class="line">hexo generate <span class="comment"># 重新生成静态文件</span></span><br><span class="line">hexo server   <span class="comment"># 在本地预览</span></span><br></pre></td></tr></table></figure>
+<p>然后刷新你的博客页面，页脚信息应该已经发生改变或消失了。</p></li>
 </ol>
-<p>访问你的博客，并打开一篇带有标题结构的文章，就应该能看到目录了。希望这能帮到你！</p>
 ]]></content>
       <categories>
         <category>CS-Study</category>
@@ -676,74 +744,6 @@ Reference)</strong>。</p>
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>删除或修改 Hexo 博客页脚（footer）</title>
-    <url>/2025/05/21/%E5%88%A0%E9%99%A4%E6%88%96%E4%BF%AE%E6%94%B9-Hexo-%E5%8D%9A%E5%AE%A2%E9%A1%B5%E8%84%9A%EF%BC%88footer%EF%BC%89/</url>
-    <content><![CDATA[<p>要删除或修改 Hexo 博客页脚（footer）中“Theme By Levblanc. Inspired By
-Clean Blog. Powered By
-Hexo.”这样的信息，你需要编辑你当前使用主题的模板文件。</p>
-<p>这些信息通常被称为<strong>主题版权信息</strong>或<strong>Powered By
-信息</strong>。</p>
-<p>以下是操作步骤：</p>
-<ol type="1">
-<li><p><strong>确定你当前使用的主题：</strong> 打开你的 Hexo 根目录下的
-<code>_config.yml</code> 文件。找到 <code>theme</code>
-字段，它会告诉你当前正在使用哪个主题。例如：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">levblanc</span> <span class="comment"># 假设你的主题名是 levblanc</span></span><br></pre></td></tr></table></figure></li>
-<li><p><strong>找到主题的布局文件：</strong> 进入
-<code>themes/你的主题名/</code> 目录。
-页脚信息通常位于主题的布局文件（<code>layout</code>
-文件夹）中。你需要寻找的文件可能是：</p>
-<ul>
-<li><code>themes/你的主题名/layout/_partial/footer.ejs</code> (或
-<code>.pug</code>, <code>.swig</code>，取决于主题使用的模板引擎)</li>
-<li><code>themes/你的主题名/layout/footer.ejs</code></li>
-<li><code>themes/你的主题名/layout/layout.ejs</code>
-(如果页脚直接集成在主布局文件中)</li>
-</ul>
-<p>根据你提供的图片，主题名称可能是
-<code>Levblanc</code>。所以，你可能会在
-<code>themes/levblanc/layout/_partial/footer.ejs</code>
-或类似路径中找到相关代码。</p></li>
-<li><p><strong>编辑文件并删除/修改代码：</strong>
-打开找到的相应文件。使用文本编辑器搜索图片中显示的文字，例如 “Levblanc”,
-“Clean Blog”, “Hexo” 等关键词。</p>
-<p>你可能会看到类似以下的代码片段：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"copyright"</span>&gt;</span></span><br><span class="line">    <span class="symbol">&amp;copy;</span> &lt;%= date(new Date(), 'YYYY') %&gt; &lt;%= config.author || config.title %&gt;. All Rights Reserved.</span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    Theme By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/Levblanc"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Levblanc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>. Inspired By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/your-clean-blog-repo"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Clean Blog<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line">    Powered By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://hexo.io/"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>或者：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Theme By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0);"</span>&gt;</span>Levblanc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>. Inspired By Clean Blog. Powered By <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://hexo.io/"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>你可以选择：</strong></p>
-<ul>
-<li><strong>直接删除：</strong> 将包含这些文字的整个 HTML 标签（通常是
-<code>&lt;p&gt;</code> 或 <code>&lt;div&gt;</code>）删除。</li>
-<li><strong>修改：</strong> 将文本改为你自己的信息，例如 “由
-[你的名字/博客名] 提供”。</li>
-<li><strong>注释掉：</strong> 如果你不确定，可以先用 HTML 注释 ``
-将其注释掉，以便将来恢复。</li>
-</ul>
-<p><strong>请注意：</strong></p>
-<ul>
-<li>修改主题文件时，最好先<strong>备份</strong>一下。</li>
-<li>某些主题可能在<strong>主题的 <code>_config.yml</code>
-文件</strong>中提供了修改这些信息的选项。优先检查主题自身的配置文件，因为那样更新主题时你的修改不会被覆盖。在
-<code>themes/你的主题名/_config.yml</code> 中搜索
-<code>footer</code>、<code>copyright</code>、<code>powered_by</code>
-等关键词。如果有提供选项，直接在 <code>_config.yml</code>
-修改即可。</li>
-</ul></li>
-<li><p><strong>保存并重新生成：</strong> 保存你修改的文件后，回到 Hexo
-根目录，运行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean    <span class="comment"># 清除缓存</span></span><br><span class="line">hexo generate <span class="comment"># 重新生成静态文件</span></span><br><span class="line">hexo server   <span class="comment"># 在本地预览</span></span><br></pre></td></tr></table></figure>
-<p>然后刷新你的博客页面，页脚信息应该已经发生改变或消失了。</p></li>
-</ol>
-]]></content>
-      <categories>
-        <category>CS-Study</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
